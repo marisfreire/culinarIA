@@ -36,6 +36,11 @@ pip install Flask
 pip install openai
 ```
 
+ 
+```bash
+pip install python-dotenv
+```
+
 Execute o aplicativo:
 
 ```bash
