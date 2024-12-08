@@ -1,55 +1,65 @@
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import render_template, url_for, request, Response
 from app import app
-from openai import OpenAI
+import os
+import dotenv
+import openai
 
-OpenAI.api_key = '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'
+dotenv.load_dotenv(dotenv.find_dotenv()) # carrega as variaveis de ambiente
 
-# não implementar por enquanto
-'''def generatePrompt(mensagem:str) -> str:
-    
- 
-def generateMensage(context:dict[str | None]) -> str:
+openai.api_key = os.getenv("API_KEY") 
 
-    mensage = f'me dê uma receita para {context["tipo"]}'
+
+def generate_message(context:dict[str | None]) -> str:
+    '''Recebe o contexto como um dicionário e forma o prompt que sera mandado para a api do chat gpt'''
+    message = f'me dê uma receita para {context["tipo"]}' # o tipo é obrigatorio, então sempre será retornado
     
     if context['gastronomia']:
-        mensage += f', ela deve ser da gastronomia {context['gastronomia']}'
+        message += f', ela deve ser da gastronomia {context['gastronomia']}'
 
     if context['restricoes']:
-        mensage += f', a receita NÃO pode conter {context['restricoes']}'
+        message += f', a receita NÃO pode conter {context['restricoes']}'
 
     if context['ingredientes']:
-        mensage += f', a deve usar os seguintes ingredientes: {context["ingredientes"]}'
+        message += f', a deve usar os seguintes ingredientes: {context["ingredientes"]}'
 
-    return generatePrompt(mensage)'''
-    
+    return message
 
 
-home_route = Blueprint('home', __name__) # os blueprint estão declarado, mas não estão sendo usados ainda
-# rota padrão para a landingpaga
+# rota padrão para a página inicial
 @app.route('/')
 def home():
     return render_template('index.html')
 
 
-new_recipe_route = Blueprint('nova-receita', __name__) # (ainda não usados)
-# rota provisória para a parte de geração de recitas
+# rota para a parte de geração de receitas
 @app.route('/nova-receita')
-def novaReceita():
-
-    if request.method == "GET":
-        context = {'tipo':request.args.get('tipo', None), # valor padrão será None
-                   'restricoes':request.args.get('restricoes', None), 
-                   'ingredientes':request.args.get('ingredientes', None), 
-                   'gastronomia':request.args.get('gastronomia', None)}
-    
-    if context['tipo']:
-        # mensage = generateMensage(context=context)
-        return redirect(url_for('loadingPage'))
-    
+def nova_receita():
     return render_template("nova_receita.html")
 
 
-@app.route('/nova-receita/gerando')
-def loadingPage():
-    return "carregando..."
+@app.route('/resposta', methods=['POST', 'GET'])
+def answer():
+
+    if request.method == "POST":
+        data = request.json
+        context = {
+            'tipo': data.get('tipo'),
+            'restricoes': data.get('restricoes'),
+            'ingredientes': data.get('ingredientes'),
+            'gastronomia': data.get('gastronomia')
+        }
+
+        message = generate_message(context=context)
+
+    def generate(): 
+        response = openai.completions.create(
+            model="gpt-4o-mini",
+            prompt=message,
+            max_tokens=100,
+            stream=True) 
+
+        for chunk in response:
+            if chunk.get("choices"):
+                yield chunk["choices"][0].get("text", "")
+
+    return Response(generate(), content_type="text/plain")
