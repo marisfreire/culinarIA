@@ -6,10 +6,12 @@ submit_btn.addEventListener("click", async (e) => {
     e.preventDefault();
 
     const data = {
-        restricoes: document.querySelector('input[name="restricoes"]').value,
-        tipo: document.querySelector('input[name="tipo"]').value,
         ingredientes: document.querySelector('input[name="ingredientes"]').value,
-        gastronomia: document.querySelector('input[name="gastronomia"]').value
+        eletrodomesticos: document.querySelector('input[name="eletrodomesticos"]').value,
+        culinaria: document.querySelector('input[name="culinaria"]').value,
+        restricoes: document.querySelector('input[name="restricoes"]').value,
+        porcoes: document.querySelector('select[name="porcoes"]').value,
+        refeicao: document.querySelector('select[name="refeicao"]').value
     };
 
     const response = await fetch("/resposta", {
