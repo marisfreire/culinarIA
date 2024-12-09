@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CHEFEAI</title>
         <link href="https://fonts.googleapis.com/css2?family=Playwright+Hrvatska+Lijeva&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../static/style.css">
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,14 +13,16 @@
     </head>
 <body>
     <header>
-        <div class="text-header">
-
-            <span>Chefe ai</span>
-        </div>
+        <div class="logo">
+        <i class="fa-solid fa-utensils"></i>
+        <h1 class="text-header">
+            Chefe ai
+        </h1> </div>
     </header>
 
     <main class="tela">
-            <div class="form-container">
+            
+               
             <form id="geradorReceitas" class="form">
                 
 
@@ -28,23 +30,23 @@
                 <div>
 
                     <label for="ingredientes">Ingredientes:</label>
-                    <input type="text" id="ingredientes" name="ingredientes" aria-label="Ingredientes">
+                    <input type="text" id="ingredientes" name="ingredientes" placeholder="Ex: Arroz, ovo, pepino japônes, etc." aria-label="Ingredientes">
                 </div>
 
                 <div>
 
                     <label for="eletrodomesticos">Eletrodomésticos:</label>
-                    <input type="text" id="eletrodomesticos" name="eletrodomesticos" aria-label="Eletrodomésticos">
+                    <input type="text" id="eletrodomesticos" name="eletrodomesticos" placeholder="Ex: Airfryer, microondas, fogão a gás" aria-label="Eletrodomésticos">
                 </div>
 
                 <div>
 
                     <label for="restricoes">Restrições Alimentares:</label>
-                    <input type="text" id="restricoes" name="restricoes" aria-label="Restrições Alimentares">
+                    <input type="text" id="restricoes" name="restricoes" placeholder="Ex: Intolerância a lactose, zero açúcar, doença celíaca" aria-label="Restrições Alimentares">
                 </div>
                 <div>
                     <label for="culinaria">Culinária:</label>
-                <input type="text" id="culinaria" name="culinaria" aria-label="Culinária">
+                <input type="text" id="culinaria" name="culinaria" placeholder="Ex: Vegana, Japonesa, Brasileira" aria-label="Culinária">
                 
                 </div>
                 
@@ -74,17 +76,18 @@
                     </div>
                 </div>
 
-                <button type="submit">GERAR</button>
+                <button type="submit">GERAR RECEITA</button>
             </form>
                 
-        </div>
-            <div class="Receita">
-                <h1>Título da Receita</h1>
+        
+            <div class="receita-container">
+                <h2 class="receita"> Preencha suas preferências e veja sua receita aparecer aqui :) </h2>
+               <!-- <h1>Título da Receita</h1>
                 <h2>Ingredientes</h2>
-                <h2> Passo a Passo</h2>
+                <h2> Passo a Passo</h2> -->
             </div>
     </main>
-
+    <script src="https://kit.fontawesome.com/8e9a566064.js" crossorigin="anonymous"></script>
     <script src="script.js"></script> 
 </body>
 </html>

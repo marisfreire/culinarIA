@@ -29,19 +29,11 @@ ChefeAI/
 instale as dependências com os seguintes comandos:
 
 ```bash
-pip install Flask
+pip install -r requirements.txt
 ```
 
-```bash
-pip install openai
-```
-
- 
-```bash
-pip install python-dotenv
-```
-
-Execute o aplicativo:
+### 💻 Execute o aplicativo:
+---
 
 ```bash
 python main.py

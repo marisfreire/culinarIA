@@ -1,69 +1,78 @@
 * {
     margin: 0;
     padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
     color: #f6f6f6;
-    color: black;
+    color: #000;
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+@media (max-width: 800px) {
+    
+    .tela{
+        flex-direction: column;
+    }
+
+    header{
+       justify-content: center;
+       
+    }
+    
 }
 
 header {
     display: flex;
-    justify-content: center;
-    font-family: "Playwrite HR Lijeva", cursive;
+    font-family: "Playwrite HR Lijeva";
     font-optical-sizing: auto;
-    height: 60px;
-    
+    padding: 10px 0 10px 0;
     background-color: #EB6E00;
-    color: white;
-
+    color: #fff;
+    
     .text-header{
-        display: flex;
-        align-items: center;
-        width: calc(80% + 20px);
-
-        span{
-            font-size: 24px;
-        }
+        margin-left: 10px;
+        font-size: 36px;
     }
 }
 
-.Titulo-Destaque {
-width: 80%;
-
+i{
+    font-size: 45px;
+    align-self: center;
+}
+.logo{
+    margin-left: 100px;
+    display: flex;
 }
 
 .tela {
-    height: calc(100vh - 60px);
     display: flex;
     justify-content: center;
+    justify-self: center;
     align-items: center;
     gap: 20px;
 
 }
 
 .form {
-
     display: flex;
     flex-direction: column;
+    align-self: stretch;
+    margin-top: 40px;
+    margin-bottom: 40px;
     gap: 10px;
-}
-
-.Receita {
-    width: 40%;
-    height: 90%;
-    text-align: center;
-    border: 1px solid #ccc;
+   
+    justify-content: center;
+    padding: 1rem;
 }
 
 .form label {
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-size: 24px;
     font-weight: bold;
 }
 
@@ -71,19 +80,24 @@ width: 80%;
 .form select {
     width: 100%;
     padding: 8px;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 20px;
+
 }
 
 button[type="submit"] {
-    background-color: #ff5722;
-    color: white;
+    background-color: #EB6E00;
+    color: #fff;
+    font-weight: bold;
+    width: 50%;
+    align-self: center;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.25rem;
     cursor: pointer;
     text-transform: uppercase;
 }
@@ -102,11 +116,20 @@ button[type="submit"]:hover {
     }
 }
 
-.form-container {
 
-    width: 40%;
-    height: 90%;
+.receita-container{
+    max-width: 800px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    align-self: stretch;
+    margin-top: 40px;
+    margin-bottom: 40px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 20px;
+    padding: 100px;
+}
+.receita{
+    color: #757474a9;
 }
