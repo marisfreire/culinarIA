@@ -1,18 +1,90 @@
 <!DOCTYPE html>
-    <html lang="pt-br">
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ChefeAI</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <title>CHEFEAI</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playwright+Hrvatska+Lijeva&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playwrite+HR+Lijeva:wght@100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     </head>
-    <body>
-        <div class="container mt-4">
-        <h2>ChefeAI</h2>
-        <div class="mt-4">   
-            <a href="{{ url_for('nova_receita') }}" class="btn btn-primary">nova receita</a>
+<body>
+    <header>
+        <div class="text-header">
+
+            <span>Chefe ai</span>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
-    </html>
+    </header>
+
+    <main class="tela">
+            <div class="form-container">
+            <form id="geradorReceitas" class="form">
+                
+
+
+                <div>
+
+                    <label for="ingredientes">Ingredientes:</label>
+                    <input type="text" id="ingredientes" name="ingredientes" aria-label="Ingredientes">
+                </div>
+
+                <div>
+
+                    <label for="eletrodomesticos">Eletrodomésticos:</label>
+                    <input type="text" id="eletrodomesticos" name="eletrodomesticos" aria-label="Eletrodomésticos">
+                </div>
+
+                <div>
+
+                    <label for="restricoes">Restrições Alimentares:</label>
+                    <input type="text" id="restricoes" name="restricoes" aria-label="Restrições Alimentares">
+                </div>
+                <div>
+                    <label for="culinaria">Culinária:</label>
+                <input type="text" id="culinaria" name="culinaria" aria-label="Culinária">
+                
+                </div>
+                
+                <div class="porcoes-pratos">
+
+                    <div>
+                        
+                        <label for="prato">Prato:</label>
+                        <select name="prato" id="prato" aria-label="Prato">
+                            <option value="cafe">Café da Manhã</option>
+                            <option value="entrada">Entrada</option>
+                            <option value="almoco">Almoço</option>
+                            <option value="sobremesa">Sobremesa</option>
+                            <option value="jantar">Jantar</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="porcao">Porções:</label>
+                        <select name="porcao" id="porcao" aria-label="Porções">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit">GERAR</button>
+            </form>
+                
+        </div>
+            <div class="Receita">
+                <h1>Título da Receita</h1>
+                <h2>Ingredientes</h2>
+                <h2> Passo a Passo</h2>
+            </div>
+    </main>
+
+    <script src="script.js"></script> 
+</body>
+</html>
