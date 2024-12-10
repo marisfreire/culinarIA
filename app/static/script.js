@@ -4,7 +4,7 @@ const input = document.getElementById('input');
 
 submit_btn.addEventListener("click", async (e) => {
     e.preventDefault();
-
+    
     const data = {
         ingredientes: document.querySelector('input[name="ingredientes"]').value,
         eletrodomesticos: document.querySelector('input[name="eletrodomesticos"]').value,
@@ -13,22 +13,23 @@ submit_btn.addEventListener("click", async (e) => {
         porcoes: document.querySelector('select[name="porcoes"]').value,
         refeicao: document.querySelector('select[name="refeicao"]').value
     };
-
+    
     const response = await fetch("/resposta", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
     });
-
-
+    
+    document.querySelector('.receita').style.display = 'none'; // esconder a frase inicial
+    
     const reader = response.body.getReader();
     let output = "";
-
+    
     while (true) {
         const { done, value } = await reader.read();
         output += new TextDecoder().decode(value);
         body.innerHTML = marked.parse(output);
-
+        
         if (done) {
             return;
         }

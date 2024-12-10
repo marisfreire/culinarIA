@@ -21,7 +21,7 @@ def generate_message(context:dict[str | None]) -> str:
         message += f', ela deve ser da culinaria {context['culinaria']}'
 
     if context['restricoes']:
-        message += f', a receita NÃO pode conter {context['restricoes']}'
+        message += f', ela receita NÃO pode conter {context['restricoes']}'
 
     if context['ingredientes']:
         message += f', a deve usar os seguintes ingredientes: {context["ingredientes"]}'
@@ -66,7 +66,7 @@ def answer():
             model="gpt-4o-mini", # talvez mudar o modelo para um mais preciso antes do 'deploy' seja interessante
             messages=[{"role": "user", "content": message}],
             stream=True,
-            max_tokens=100 # poucos tokens apenas para testes, normalmente 400 - 500 é suficente
+            max_tokens=50 # poucos tokens apenas para testes, normalmente 400 - 500 é suficente
         ) 
 
         for chunk in stream: # stream da resposta

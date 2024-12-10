@@ -23,7 +23,7 @@
     <main class="tela">
             
                
-            <form id="geradorReceitas" class="form">
+            <form id="geradorReceitas" class="form" method="post">
                 
 
 
@@ -55,18 +55,18 @@
                     <div>
                         
                         <label for="prato">Prato:</label>
-                        <select name="prato" id="prato" aria-label="Prato">
-                            <option value="cafe">Café da Manhã</option>
-                            <option value="entrada">Entrada</option>
-                            <option value="almoco">Almoço</option>
-                            <option value="sobremesa">Sobremesa</option>
+                        <select name="refeicao" id="refeicao" aria-label="Prato">
+                            <option value="café da manhã">Café da Manhã</option>
+                            <option value="almoço">Almoço</option>
                             <option value="jantar">Jantar</option>
+                            <option value="entrada">Entrada</option>
+                            <option value="sobremesa">Sobremesa</option>
                         </select>
                     </div>
 
                     <div>
-                        <label for="porcao">Porções:</label>
-                        <select name="porcao" id="porcao" aria-label="Porções">
+                        <label for="porcoes">Porções:</label>
+                        <select name="porcoes" id="porcoes" aria-label="Porções">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -82,12 +82,14 @@
         
             <div class="receita-container">
                 <h2 class="receita"> Preencha suas preferências e veja sua receita aparecer aqui :) </h2>
-               <!-- <h1>Título da Receita</h1>
+                <div id="body"></div>
+                <!-- <h1>Título da Receita</h1>
                 <h2>Ingredientes</h2>
                 <h2> Passo a Passo</h2> -->
             </div>
     </main>
     <script src="https://kit.fontawesome.com/8e9a566064.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../static/script.js"></script> 
 </body>
 </html>
