@@ -1,7 +1,13 @@
 # ChefeAI
----
 
-**ChefeAI** é um projeto de integração com IA para a disciplina de Desenvolvimento de Software do período 2024.2
+**ChefeAI** é um projeto de integração com IA desenvolvido para a disciplina de Desenvolvimento de Software do período 2024.2. Na aplicação, o usuário pode inserir suas preferências (Quanto a ingredientes, culinária, porções, etc.) e receber uma receita adequada gerada pela Inteligência Artificial.
+
+## Sumário
+1. Estrutura de Diretórios
+1. Dependências
+1. Execute o Aplicativo
+1. Versionamento e Problemas Conhecidos
+1. Créditos
 
 ### 🗂️ Estrutura de Diretórios
 ---
@@ -40,3 +46,11 @@ python main.py
 ```
 
 O aplicativo estará disponível em `http://localhost:5000`.
+
+### Versionamento e Problemas Conhecidos
+---
+O projeto atualmente está na versão de MVP (Mínimo Produto Viável), a equipe reconhece erros eventuais que possam ocorrer pela geração da receita.
+
+### Créditos
+---
+O ícone do lado do nome do projeto foi adquirido através do site Font Awesome.
