@@ -22,15 +22,19 @@
 
     <main class="tela">
             
-               
             <form id="geradorReceitas" class="form" method="post">
                 
-
-
                 <div>
 
                     <label for="ingredientes">Ingredientes:</label>
                     <input type="text" id="ingredientes" name="ingredientes" placeholder="Ex: Arroz, ovo, pepino japônes, etc." aria-label="Ingredientes">
+                </div>
+
+                <div class="checkbox-ingredientes">
+                    <label for="apenas-ingredientes">
+                        <input type="checkbox" id="apenas-ingredientes" name="apenas-ingredientes"/>
+                    </label>
+                    Usar apenas os ingredientes listados
                 </div>
 
                 <div>
@@ -40,20 +44,17 @@
                 </div>
 
                 <div>
-
                     <label for="restricoes">Restrições Alimentares:</label>
                     <input type="text" id="restricoes" name="restricoes" placeholder="Ex: Intolerância a lactose, zero açúcar, doença celíaca" aria-label="Restrições Alimentares">
                 </div>
                 <div>
                     <label for="culinaria">Culinária:</label>
-                <input type="text" id="culinaria" name="culinaria" placeholder="Ex: Vegana, Japonesa, Brasileira" aria-label="Culinária">
-                
+                    <input type="text" id="culinaria" name="culinaria" placeholder="Ex: Vegana, Japonesa, Brasileira" aria-label="Culinária">
                 </div>
                 
                 <div class="porcoes-pratos">
 
-                    <div>
-                        
+                    <div>  
                         <label for="prato">Prato:</label>
                         <select name="refeicao" id="refeicao" aria-label="Prato">
                             <option value="café da manhã">Café da Manhã</option>
@@ -79,7 +80,6 @@
                 <button type="submit">GERAR RECEITA</button>
             </form>
                 
-        
             <div class="receita-container">
                 <h2 class="receita"> Preencha suas preferências e veja sua receita aparecer aqui :) </h2>
                 <div id="body"></div>
