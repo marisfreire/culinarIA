@@ -1,3 +1,5 @@
+/* Arquivo de estilização da página HTML */
+/* Reseta configurações padrões do DOM para facilitar estilização */
 * {
     margin: 0;
     padding: 0;
@@ -5,6 +7,7 @@
     box-sizing: border-box;
 }
 
+/* Utilizamos a função Roboto para o corpo do texto e Playwrite HR Lijeva para o nome do site*/
 body {
     color: #f6f6f6;
     color: #000;
@@ -14,6 +17,7 @@ body {
     min-height: 100vh;
 }
 
+/* A configuração abaixo permite a responsividade do site / O modelo mobile */
 @media (max-width: 800px) {
     
     .tela{
@@ -27,6 +31,7 @@ body {
     
 }
 
+/* O código abaixo configura o cabeçalho */
 header {
     display: flex;
     font-family: "Playwrite HR Lijeva";
@@ -50,6 +55,7 @@ i{
     display: flex;
 }
 
+/* O código abaixo estiliza o contêiner tela, onde o formulário e o quadro de geração da receita residem */
 .tela {
     display: flex;
     justify-content: center;
@@ -59,6 +65,7 @@ i{
 
 }
 
+/* O código abaixo estiliza o formulário */
 .form {
     display: flex;
     flex-direction: column;
@@ -71,7 +78,7 @@ i{
     padding: 1rem;
 }
 
-.form label {
+.txt-grande {
     font-size: 24px;
     font-weight: bold;
 }
@@ -116,6 +123,17 @@ button[type="submit"]:hover {
     }
 }
 
+.checkbox-ingredientes{
+    display: flex;
+    align-items: baseline;
+    margin-top: -20px;
+}
+
+#apenas-ingredientes{
+    width: auto;
+    margin-right: 10px;
+}
+/* O código abaixo estiliza o contâiner onde será contido a receita gerada */
 .receita-container{
     max-width: 800px;
     border: 2px solid #ccc;
@@ -133,16 +151,4 @@ button[type="submit"]:hover {
     color: #757474a9;
 }
 
-.form input#ingredientes {
-    margin-bottom: -5px;
-}
 
-.checkbox-ingredientes {
-    margin-top: -5px;
-    display: flex;
-    align-items: center;
-}
-
-.checkbox-ingredientes input {
-    margin-right: 5px;
-}

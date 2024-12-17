@@ -53,4 +53,4 @@ O projeto atualmente está na versão de MVP (Mínimo Produto Viável), a equipe
 
 ### Créditos
 ---
-O ícone do lado do nome do projeto foi adquirido através do site Font Awesome.
+O ícone do lado do nome do projeto foi adquirido através do site Font Awesome, utilizamos também as fontes Roboto e Playwrite HR Lijeva, ambas do Google Fontes.
