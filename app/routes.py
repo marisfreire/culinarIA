@@ -9,6 +9,7 @@ dotenv.load_dotenv(dotenv.find_dotenv()) # carrega as variaveis de ambiente
 openai.api_key = os.getenv("API_KEY") 
 
 
+# Função que gera a mensagem (prompt) que será enviada à API da OpenAI
 def generate_message(context:dict[str | None | bool]) -> str:
     '''Recebe o contexto como um dicionário e forma o prompt que sera mandado para a API da OpenAI'''
 
@@ -63,6 +64,7 @@ def answer():
         message = generate_message(context=context)
         print(message)
 
+    # Função para gerar a resposta usando a API da OpenAI
     def generate(message:str):
         stream = openai.chat.completions.create(
             model="gpt-4o-mini", # talvez mudar o modelo para um mais preciso antes do 'deploy' seja interessante
