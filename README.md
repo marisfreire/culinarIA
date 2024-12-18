@@ -1,6 +1,6 @@
-# ChefeAI
+# CulinarIA
 
-**ChefeAI** é um projeto de integração com IA desenvolvido para a disciplina de Desenvolvimento de Software do período 2024.2. Na aplicação, o usuário pode inserir suas preferências (Quanto a ingredientes, culinária, porções, etc.) e receber uma receita adequada gerada pela Inteligência Artificial.
+**CulinarIA** é um projeto de integração com IA desenvolvido para a disciplina de Desenvolvimento de Software do período 2024.2. Na aplicação, o usuário pode inserir suas preferências (Quanto a ingredientes, culinária, porções, etc.) e receber uma receita adequada gerada pela Inteligência Artificial.
 
 ## Sumário
 1. Estrutura de Diretórios
@@ -15,7 +15,7 @@
 A estrutura de arquivos do projeto esta da seguinte forma:
 
 ```
-ChefeAI/
+culinarIA/
 ├── app/
 │   ├── __init__.py           # Inicialização de app como módulo
 │   ├── routes.py             # Definição das rotas do servidor
