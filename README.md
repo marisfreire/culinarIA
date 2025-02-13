@@ -20,7 +20,7 @@ culinarIA/
 │   ├── __init__.py           # Inicialização de app como módulo
 │   ├── routes.py             # Definição das rotas do servidor
 │   ├── models.py             # Definição dos modelos de dados
-│   ├── templates/            # Arquivos de template (HTML)
+│   ├── assets/            # Arquivos de template (HTML)
 │   │   ├── index.html        # Página principal do aplicativo
 │   │   └── nova_receita.html # Página para gerar novas receitas
 │   └── static/               # Arquivos estáticos (JS, CSS)

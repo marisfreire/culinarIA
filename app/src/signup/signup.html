@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
-    
+    <form>
+        <h1>Cadastro</h1>
+        <h3>Já tem uma conta? <a class="laranja-text" href="../login/login.html">Entre aqui</a></h3>
+        <div class="page1">
+            <p>Dados pessoais</p>
+            <label class="campo-input">Nome <input type="text" placeholder="Informe seu nome completo"></label>
+            <label class="campo-input">E-mail <input type="text" placeholder="Informe um e-mail válido"></label>
+            <label class="campo-input">Senha<input type="password" placeholder="Informe uma senha com no mínimo 8 caracteres"></label>
+            <label class="campo-input">Confirmar senha<input type="password" placeholder="Confirme sua senha"></label>
+            <button class="btn-amarelo" onclick="change()">Próximo</button>
+        </div>
+        <div class="page2">
+            <p>Conte-nos um pouco mais sobre você</p>
+            <label class="campo-input">Nível gastronômico <input type="text" placeholder="Informe seu nome completo"></label>
+            <label class="campo-input">Alergias, restrições alimentares ou intolerâncias <input type="text" placeholder="Informe um e-mail válido"></label>
+            <label class="campo-input"><input type="checkbox"> Prefiro não informar </label>
+            <label class="campo-input"><input type="checkbox"> Concordo com os <a href="" class="laranja-text">Termos de serviço</a></label>
+            <button class="btn-amarelo" onclick="menu()">Cadastrar</button>
+        </div>
+    </form>
+    <div class="laranja"></div>
+    <script>
+        document.querySelector("page2").style.opacity = 0;
+        let change = () => {
+            document.querySelector("page1").style.opacity = 0
+            document.querySelector("page2").style.opacity = 1;
+        }
+
+        let menu = () => {
+            
+        }
+
+    </script>
 </body>
 </html>
