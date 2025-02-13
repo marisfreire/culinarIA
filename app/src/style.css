@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
+
+:root{
+    --laranja: #F16224;
+    --amarelo: #F5AD00;
+    --verde: #00BF63;
+    --laranja-escuro: #9E2F00;
+}
+
+.laranja{
+    background-color: var(--laranja);
+}
