@@ -1,3 +1,5 @@
+### desmançar esse arquivo em vários usando blueprints###
+
 from flask import render_template, url_for, request
 from app import app
 import openai
@@ -62,7 +64,7 @@ def answer():
             'apenas_ingredientes': data.get('apenas_ingredientes')
         }
         message = generate_message(context=context)
-        print(message)
+        # print(message)
 
     # Função para gerar a resposta usando a API da OpenAI
     def generate(message:str):
