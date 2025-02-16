@@ -9,7 +9,8 @@ class User(UserMixin, db.Document):
     username = db.StringField(required=True, unique=True, max_length=50)
     password_hash = db.StringField(required=True)
     name = db.StringField(max_length=100)
-    
+    about = db.StringField()
+
     create_date = db.DateTimeField(default=datetime.utcnow)
     
     preferences = db.DictField(default={

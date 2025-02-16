@@ -1,5 +1,3 @@
-### desmançar esse arquivo em vários usando blueprints###
-
 from flask import render_template, url_for, request
 from app import app
 import openai
@@ -45,7 +43,7 @@ def home():
 # rota para a parte de geração de receitas
 @app.route('/nova-receita')
 def nova_receita():
-    return render_template("nova_receita.html")
+    return render_template("main/index.html")
 
 
 # resposta para a receita 

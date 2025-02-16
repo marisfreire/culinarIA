@@ -7,7 +7,7 @@ class Recipe(db.Document):
     instructions = db.ListField(db.StringField(), required=True)
     create_date = db.DateTimeField(default=datetime.utcnow)
     user_id = db.ReferenceField('User', required=True)
-    tags = db.ListField(db.StringField(), required=True)
+    tags = db.ListField(db.StringField())
     
     meta = {
         'collection': 'recipes',
