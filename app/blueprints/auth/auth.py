@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.blueprints.auth import auth_bp
 from flask_login import login_user, logout_user, login_required, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.users import User
 
 
@@ -15,13 +14,6 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        informe_preferences = False if request.form.get('informe_preferences') else True
-        if informe_preferences:
-            preferences = {
-                'skill_level':          request.form.get('skill_level'),
-                'dietary_restrictions': request.form.get('dietary_restrictions'),
-                'favorite_cuisines':    request.form.get('favorite_cuisines')
-            }
         remember = True if request.form.get('remember') else False
         
         user = User.objects(email=email).first()
@@ -32,7 +24,7 @@ def login():
             
         login_user(user, remember=remember)
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('menu.menu'))
         
     return render_template('auth/login.html')
 
@@ -43,27 +35,26 @@ def signup():
         return redirect(url_for('main.index'))
         
     if request.method == 'POST':
-        email = request.form.get('email')
-        username = request.form.get('username')
+        email =    request.form.get('email')
         password = request.form.get('password')
-        name = request.form.get('name')
+        name =     request.form.get('name')
         
-        if User.objects(email=email).first(): # verifica se já existe no banco
+        if User.collection.find_one({"email": email}):  # verifica se já existe no banco
             flash('Email já registrado.', 'error')
             return redirect(url_for('auth.signup'))
+
+        informe_preferences = False if request.form.get('informe_preferences') else True
+        if informe_preferences:
+            skill_level =          request.form.get('skill_level'),
+            dietary_restrictions = request.form.get('dietary_restrictions'),
             
-        if User.objects(username=username).first():
-            flash('Nome de usuário já existe.', 'error')
-            return redirect(url_for('auth.signup'))
-        
-        new_user = User(
-            email=email,
-            username=username,
-            name=name
+        new_user = User.create_user(
+            email = email,
+            name = name,
+            password_hash = password,
+            skill_level = skill_level,
+            dietary_restrictions = dietary_restrictions 
         )
-        new_user.set_password(password)
-        new_user.save()
-        
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('auth.login'))
         
