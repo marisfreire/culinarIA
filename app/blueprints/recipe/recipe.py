@@ -1,5 +1,5 @@
 from flask import render_template, url_for, request
-from app import app
+from app.blueprints.recipe import recipe_bp
 import openai
 import os
 import dotenv
@@ -9,7 +9,7 @@ dotenv.load_dotenv(dotenv.find_dotenv()) # carrega as variaveis de ambiente
 openai.api_key = os.getenv("API_KEY") 
 
 
-# Função que gera a mensagem (prompt) que será enviada à API da OpenAI
+"""# Função que gera a mensagem (prompt) que será enviada à API da OpenAI
 def generate_message(context:dict[str | None | bool]) -> str:
     '''Recebe o contexto como um dicionário e forma o prompt que sera mandado para a API da OpenAI'''
 
@@ -78,3 +78,4 @@ def answer():
                 yield(chunk.choices[0].delta.content)
 
     return generate(message=message), {"Content-Type": "text/plain"}
+"""

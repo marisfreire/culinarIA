@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-home_bp = Blueprint('home', __name__, url_prefix='/')
+menu_bp = Blueprint('menu', __name__)
 
-from app.blueprints.home import routes
+from app.blueprints.menu import menu
