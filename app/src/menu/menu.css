@@ -1,1 +1,39 @@
 @import "../style.css";
+
+
+nav{
+    width: 80%;
+    justify-self: center;
+    border: 2px solid red;
+    color: var(--cinza);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 62px;
+}
+
+nav h1{
+    font-size: 48px;
+    margin: 0;
+}
+
+nav img{
+    margin-bottom: -2px;
+    filter: invert(83%);
+    width: 56px;
+}
+nav p{
+    font-weight: 700;
+    border: 3px solid var(--amarelo);
+    border-radius: 25px;
+    font-size: 25px;
+    padding: 8px 48px 8px 48px;
+    color: var(--amarelo);
+}
+
+.container-pai{
+    justify-self: center;
+    width: 80%;
+    background-color: var(--branco);
+    border-radius: 15px;
+}
