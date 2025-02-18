@@ -12,11 +12,12 @@ class User(UserMixin):
         return (last_user["user_id"] + 1) if last_user else 1
 
     @staticmethod
-    def create_user(str:email, 
-                    str:password, 
-                    str:name="", 
-                    list:dietary_restrictions = [], 
-                    str:skill_level = "iniciante") -> dict:
+    def create_user(email:str, 
+                    password:str, 
+                    name="", 
+                    dietary_restrictions = [], 
+                    skill_level = "iniciante"
+                    ) -> dict:
 
         user_data = {
             "user_id":       User.get_next_user_id(),
@@ -35,29 +36,29 @@ class User(UserMixin):
         return user_data
 
     @staticmethod
-    def find_by_email(str:email):
+    def find_by_email(email:str):
         return User.collection.find_one({"email": email})
 
     @staticmethod
-    def check_password(str:user, str:password):
+    def check_password(user:str, password:str):
         return check_password_hash(user["password_hash"], password)
 
     @staticmethod
-    def increment_recipes_created(int:user_id):
+    def increment_recipes_created(user_id:int):
         User.collection.update_one(
             {"user_id": user_id},
             {"$inc": {"recipes_created": 1}}
         )
 
     @staticmethod
-    def increment_recipes_favorited(int:user_id):
+    def increment_recipes_favorited(user_id:int):
         User.collection.update_one(
             {"user_id": user_id},
             {"$inc": {"recipes_favorited": 1}}
         )
 
     @staticmethod
-    def decrement_recipes_favorited(int:user_id):
+    def decrement_recipes_favorited(user_id:int):
         User.collection.update_one(
             {"user_id": user_id, "recipes_favorited": {"$gt": 0}},
             {"$inc": {"recipes_favorited": -1}}

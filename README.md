@@ -37,6 +37,24 @@ instale as dependências com os seguintes comandos:
 ```bash
 pip install -r requirements.txt
 ```
+### Habilitar o mongoDB:
+---
+```bash
+sudo systemctl enable --now mongodb
+```
+Caso esteja criando o banco pela primeria vez abra o shell para criar o banco e suas coleções:
+```bash
+mongosh
+```
+Crie o banco de dados `culinaria`
+```bash
+use culinaria
+```
+As coleções são criadas automáticamente quando se insere um documento, mas podem ser criadas assim:
+```bash
+db.createCollection("users")
+db.createCollection("recipes")
+```
 
 ### 💻 Execute o aplicativo:
 ---
