@@ -6,7 +6,7 @@
         <!-- importando fonte do google fonts e aplicação do styles css-->
         <title>CulinarIA</title>
         <link href="https://fonts.googleapis.com/css2?family=Playwright+Hrvatska+Lijeva&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='nova-receita/nova-receita.css') }}">
         
         <!-- otimizando o carregamento da fonte-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,6 +106,6 @@
     </main>
     <script src="https://kit.fontawesome.com/8e9a566064.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../static/script.js"></script> 
+    <script src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}"></script> 
 </body>
 </html>

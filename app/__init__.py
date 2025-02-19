@@ -5,7 +5,9 @@ from flask_login import LoginManager
 
 
 def create_app() -> Flask:
-    app = Flask(__name__)
+    app = Flask(__name__, 
+                template_folder='src',
+                static_folder='src')
 
     dotenv.load_dotenv(dotenv.find_dotenv()) # carrega as variaveis de ambiente
     app.secret_key = os.getenv("SECRET_KEY")

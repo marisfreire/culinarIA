@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CulinarIA</title>
-    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu/menu.css') }}">
 </head>
 <body>
     <nav>
-        <h1>Culinar<img src="/culinarIA/app/assets/utensils.svg"></h1>
+        <h1>Culinar<img src="{{ url_for('static', filename='assets/utensils.svg') }}"></h1>
         <p>login</p>
     </nav>
     <div class="container-pai">
@@ -17,7 +17,7 @@
         <button>gerar nova receita!</button>
 
         <div class="container-favoritos">
-            <h2><img src="/culinarIA/app/assets/favorite.svg">Meus Favoritos</h2>
+            <h2><img src="{{ url_for('static', filename='assets/favorite.svg') }}">Meus Favoritos</h2>
 
             <div class="favoritos">
 

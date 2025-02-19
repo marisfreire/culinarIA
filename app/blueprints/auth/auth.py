@@ -58,14 +58,14 @@ def signup():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('auth.login'))
         
-    return render_template('singup/signup.html')
+    return render_template('signup/signup.html')
 
 
 @auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('menu.menu'))
 
 
 @auth_bp.route('/profile')

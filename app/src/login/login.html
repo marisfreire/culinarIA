@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../login/login.css">
+    <link rel="stylesheet" href="{{ url_for('src', filename='login/login.css') }}">
     
 </head>
 <body>
     <div class="laranja">
         <form>
-        <h1 class="">Culinár<img src="/culinarIA/app/assets/utensils.svg" alt="Garfo e Faca"></h1>
+        <h1 class="">Culinár<img src="{{ url_for('static', filename='assets/utensils.svg') }}" alt="Garfo e Faca"></h1>
         
             <label class="campo-input">Nome de usuário / E-mail <input></label>
             <label class="campo-input">Senha <input type="password"></label>

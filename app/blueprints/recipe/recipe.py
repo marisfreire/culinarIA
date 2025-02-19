@@ -4,9 +4,9 @@ import openai
 
 
 # rota para a parte de geração de receitas
-@recipe_bp.route('/')
+@recipe_bp.route('/', methods=['POST', 'GET'])
 def nova_receita():
-    return render_template("recipe/index.html")
+    return render_template("nova-receita/nova-receita.html")
 
 
 # resposta para a receita 
@@ -47,8 +47,7 @@ def answer():
             'refeicao':            data.get('refeicao'),
             'apenas_ingredientes': data.get('apenas_ingredientes')
         }
-        message = generate_message(context=context)
-        # print(message)
+        
 
     # Função para gerar a resposta usando a API da OpenAI
     def generate(message:str):
@@ -67,4 +66,4 @@ def answer():
             if chunk.choices[0].delta.content is not None:
                 yield(chunk.choices[0].delta.content)
 
-    return generate(message=message), {"Content-Type": "text/plain"}
+    return generate(generate_message(context=context)), {"Content-Type": "text/plain"}

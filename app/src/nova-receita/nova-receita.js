@@ -15,7 +15,7 @@ submit_btn.addEventListener("click", async (e) => {
         apenas_ingredientes: document.querySelector('input[name=apenas-ingredientes]').checked
     };
     
-    const response = await fetch("/resposta", {
+    const response = await fetch("./resposta", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
