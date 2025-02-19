@@ -6,8 +6,15 @@ from datetime import datetime
 class User(UserMixin):
     collection = mongo.db.users
 
-    def __init__(self):
-        self.id = None
+    def __init__(self, user_data=None):
+        if user_data:
+            self.id = user_data['user_id']
+            self.email = user_data['email']
+            self.name = user_data['name']
+        else:
+            self.id = None
+            self.email = None
+            self.name = None
 
     def get_id(self):
         return str(self.id)
@@ -16,8 +23,7 @@ class User(UserMixin):
     def get(user_id):
         user_data = User.collection.find_one({"user_id": int(user_id)})
         if user_data:
-            user = User()
-            user.id = user_data["user_id"]
+            user = User(user_data)
             return user
         return None
 

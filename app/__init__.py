@@ -16,7 +16,12 @@ def create_app() -> Flask:
     mongo.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
+    from app.models.users import User
     
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.get(user_id)
+
     from app.blueprints.auth import auth_bp
     from app.blueprints.menu import menu_bp
     from app.blueprints.recipe import recipe_bp

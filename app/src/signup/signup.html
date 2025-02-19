@@ -4,34 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='auth/signup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='signup/signup.css') }}">
 </head>
 <body>
-    <form>
+    <form method="POST" action="{{ url_for('auth.signup') }}" id="signup-form">
         <h1>Cadastro</h1>
-        <h3>Já tem uma conta? <a class="laranja-text" href="../login/login.html">Entre aqui</a></h3>
-        <div class="page1 " id="pg1">
+        <h3>Já tem uma conta? <a class="laranja-text" href="{{ url_for('auth.login') }}">Entre aqui</a></h3>
+        <div class="page1" id="pg1">
             <p>Dados pessoais</p>
-            <label class="campo-input">Nome <input type="text" placeholder="Informe seu nome completo"></label>
-            <label class="campo-input">E-mail <input type="text" placeholder="Informe um e-mail válido"></label>
-            <label class="campo-input">Senha<input type="password" placeholder="Informe uma senha com no mínimo 8 caracteres"></label>
-            <label class="campo-input">Confirmar senha<input type="password" placeholder="Confirme sua senha"></label>
-            <button class="btn-amarelo" onmousedown="change()">Próximo</button>
+            <label class="campo-input">Nome 
+                <input type="text" name="name" required placeholder="Informe seu nome completo">
+            </label>
+            <label class="campo-input">E-mail 
+                <input type="email" name="email" required placeholder="Informe um e-mail válido">
+            </label>
+            <label class="campo-input">Senha
+                <input type="password" name="password" required minlength="8" placeholder="Informe uma senha com no mínimo 8 caracteres">
+            </label>
+            <label class="campo-input">Confirmar senha
+                <input type="password" name="confirm-password" required placeholder="Confirme sua senha">
+            </label>
+            <button type="button" class="btn-amarelo" onclick="nextPage()">Próximo</button>
         </div>
-        <div class="page2 " id ="pg2">
+        <div class="page2 hidden" id="pg2">
             <p>Conte-nos um pouco mais sobre você</p>
-           
-            <label class="campo-input">Nível gastronômico <input type="text" placeholder="Infome seu nível de experiência cozinhando"></label>
-            <label class="campo-input">Alergias, restrições alimentares ou intolerâncias <input type="text" placeholder="Informe-nos ingredientes proibidos"></label>
+            <label class="campo-input">Nível gastronômico 
+                <select name="skill_level" required>
+                    <option value="iniciante">Iniciante</option>
+                    <option value="intermediario">Intermediário</option>
+                    <option value="avancado">Avançado</option>
+                </select>
+            </label>
+            <label class="campo-input">Alergias, restrições alimentares ou intolerâncias 
+                <input type="text" name="dietary_restrictions" placeholder="Informe-nos ingredientes proibidos">
+            </label>
             <div class='container-checkbox'>
-                <label><input type="checkbox"> Prefiro não informar </label>
-                <label><input type="checkbox"> Concordo com os <a href="" class="laranja-text">Termos de serviço</a></label>
-            
+                <label>
+                    <input type="checkbox" name="informe_preferences"> Prefiro não informar
+                </label>
+                <label>
+                    <input type="checkbox" required> Concordo com os <a href="" class="laranja-text">Termos de serviço</a>
+                </label>
             </div>
-
-            <button class="btn-amarelo" id="btn-cadastrar" onclick="menu()">Cadastrar</button>
-            </div>
-       
+            <button type="submit" class="btn-amarelo" id="btn-cadastrar">Cadastrar</button>
+        </div>
     </form>
     <div class="laranja"></div>
     <script>
@@ -48,5 +64,6 @@
         function menu(){
         }
     </script>
+    <script src="{{ url_for('static', filename='signup/signup.js') }}"></script> 
 </body>
 </html>
