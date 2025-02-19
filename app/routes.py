@@ -1,5 +1,5 @@
 from flask import render_template, url_for, request
-from app.mvp import app
+from app import app
 import openai
 import os
 import dotenv
@@ -12,7 +12,7 @@ openai.api_key = os.getenv("API_KEY")
 def generate_message(context:dict[str | None | bool]) -> str:
     '''Recebe o contexto como um dicionário e forma o prompt que sera mandado para a API da OpenAI'''
 
-    message = f'Sem introduções e explicações sobre, me dê uma receita que sirva {context["porcoes"]} pessoa(as)'
+    message = f'Se, por qualquer motivo, você não puder fornecer uma resposta, sempre, sem exceções, responda com "Parece que você inseriu alguma informação não válida, tente novamente!". Sem introduções e explicações sobre, me dê uma receita que sirva {context["porcoes"]} pessoa(as)'
     
     if context['refeicao']:
         message += f' para {context['refeicao']}'
@@ -47,6 +47,29 @@ def nova_receita():
 
 # resposta para a receita 
 @app.route('/resposta', methods=['POST', 'GET'])    
+  # Função para gerar a resposta usando a API da OpenAI
+def generate(message:str):
+
+        
+        stream = openai.chat.completions.create(
+            model="gpt-4o-mini", # talvez mudar o modelo para um mais preciso antes do 'deploy' seja interessante
+            messages=[{"role": "user", "content": message}],
+            stream=True,
+            max_tokens=50 # poucos tokens apenas para testes, normalmente 400 - 500 é suficente
+        ) 
+      
+        for chunk in stream: # stream da resposta
+                if chunk.choices[0].delta.content is not None:
+                    if "Desculpe," in chunk.choices[0].delta.content or "não consegui" in chunk.choices[0].delta.content or "?" in chunk.choices[0].delta.content or "Sinto muito" in chunk.choices[0].delta.content:
+                        return "Parece que você inseriu alguma informação não válida, tente novamente!"
+                    
+                    
+        for chunk in stream:
+            if chunk.choices[0].delta.content is not None:
+                yield(chunk.choices[0].delta.content)
+       
+        
+        
 def answer():
 
     if request.method == "POST":
@@ -62,18 +85,6 @@ def answer():
         }
         message = generate_message(context=context)
         print(message)
-
-    # Função para gerar a resposta usando a API da OpenAI
-    def generate(message:str):
-        stream = openai.chat.completions.create(
-            model="gpt-4o-mini", # talvez mudar o modelo para um mais preciso antes do 'deploy' seja interessante
-            messages=[{"role": "user", "content": message}],
-            stream=True,
-            max_tokens=50 # poucos tokens apenas para testes, normalmente 400 - 500 é suficente
-        ) 
-
-        for chunk in stream: # stream da resposta
-            if chunk.choices[0].delta.content is not None:
-                yield(chunk.choices[0].delta.content)
+      
 
     return generate(message=message), {"Content-Type": "text/plain"}
