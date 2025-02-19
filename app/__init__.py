@@ -1,6 +1,6 @@
 import dotenv, os
 from flask import Flask
-from app.extensions import mongo
+from app.extensions import mongo, login_manager
 from flask_login import LoginManager
 
 
@@ -10,8 +10,11 @@ def create_app() -> Flask:
     dotenv.load_dotenv(dotenv.find_dotenv()) # carrega as variaveis de ambiente
     app.secret_key = os.getenv("SECRET_KEY")
     app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+    
     mongo.init_app(app)
-
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    
     from app.blueprints.auth import auth_bp
     from app.blueprints.menu import menu_bp
     from app.blueprints.recipe import recipe_bp

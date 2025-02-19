@@ -1,14 +1,14 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Flask, Blueprint, render_template, redirect, url_for, request, flash
 from app.blueprints.auth import auth_bp
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from app.models.users import User
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
    
-    if current_user.is_authenticated: # se já estiver logado vai ser redirecionado
-        return redirect(url_for('main.index'))
+    if current_user.is_authenticated:
+        return redirect(url_for('menu.menu'))
         
     if request.method == 'POST':
         email = request.form.get('email')
@@ -26,7 +26,7 @@ def login():
 
         return redirect(url_for('menu.menu'))
         
-    return render_template('auth/login.html')
+    return render_template('login/login.html')
 
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
@@ -39,7 +39,7 @@ def signup():
         password = request.form.get('password')
         name =     request.form.get('name')
         
-        if User.collection.find_one({"email": email}):  # verifica se já existe no banco
+        if User.collection.find_one({"email": email}):
             flash('Email já registrado.', 'error')
             return redirect(url_for('auth.signup'))
 
@@ -58,7 +58,7 @@ def signup():
         flash('Registro realizado com sucesso!', 'success')
         return redirect(url_for('auth.login'))
         
-    return render_template('auth/signup.html')
+    return render_template('singup/signup.html')
 
 
 @auth_bp.route('/logout')
@@ -71,4 +71,4 @@ def logout():
 @auth_bp.route('/profile')
 @login_required
 def profile():
-    return render_template('auth/profile.html')
+    return render_template('profile/profile.html')

@@ -6,6 +6,21 @@ from datetime import datetime
 class User(UserMixin):
     collection = mongo.db.users
 
+    def __init__(self):
+        self.id = None
+
+    def get_id(self):
+        return str(self.id)
+
+    @staticmethod
+    def get(user_id):
+        user_data = User.collection.find_one({"user_id": int(user_id)})
+        if user_data:
+            user = User()
+            user.id = user_data["user_id"]
+            return user
+        return None
+
     @staticmethod
     def get_next_user_id() -> int:
         last_user = User.collection.find_one(sort=[("user_id", -1)])
