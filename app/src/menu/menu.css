@@ -19,7 +19,7 @@ body {
 }
 
 .generate-btn {
-    background-color: #ff5722;
+    background-color: #F16224;
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -51,7 +51,7 @@ body {
 }
 
 .recipe-card {
-    background-color: #00c853;
+    background-color: #00BF63;
     color: white;
     padding: 1rem;
     border-radius: 0.5rem;

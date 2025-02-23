@@ -16,9 +16,14 @@
             </h2>
             
         </div>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.profile') }}" class="profile-btn">
+                <img src="{{ url_for('static', filename='assets/profile-icon.svg') }}" alt="Perfil">
+            </a>
+        {% else %}
 
-        <a href="{{ url_for('auth.login')  }}" class="login-btn">login</a>
-
+            <a href="{{ url_for('auth.login') }}" class="login-btn">Login</a>
+        {% endif %}
         <style>
             * {
                 margin: 0;
@@ -46,7 +51,7 @@
             }
 
             .garfo-e-faca-icon {
-                width: 30px;
+                width: 35px;
                 height: auto;
                 filter: invert(0%) brightness(20%);
             }
@@ -62,6 +67,10 @@
                 text-decoration: none;
             }
 
+            .profile-btn {
+                width: 45px;
+                color: #FFA500;1
+            }
 
             .logo {
                 display: flex;

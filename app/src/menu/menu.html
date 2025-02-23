@@ -9,7 +9,11 @@
 </style>
 
 <main class="container">
-    <h1>Bem vindo de volta, [Nome da pessoa]</h1>
+    {% if current_user.is_authenticated: %}
+    <h1>Bem vindo de volta, {{ current_user.name }}</h1>
+    {% else: %}
+    <h1>Bem vindo</h1>
+    {% endif %}
     <p class="description">
         Clique no botão abaixo e gere uma receita especialmente feita para você <br>
         com a ajuda da Inteligência artificial.
