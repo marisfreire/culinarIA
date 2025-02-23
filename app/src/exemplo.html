@@ -1,0 +1,15 @@
+<!--esse arquivo serve como exemplo para a criação de 
+páginas usando templates do jinja-->
+{% extends "layout.html" %}
+
+{% block title %} ->Titulo<- {% endblock %}
+
+{% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
+
+{% block content %}
+
+<h2>->conteúdo da página<-<h2>
+
+{% endblock %}
+
+{% block script %} <script  src="{{ url_for('static', filename='script.js') }}" ></script> {% endblock %}

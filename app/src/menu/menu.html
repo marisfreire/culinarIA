@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CulinarIA</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='menu/menu.css') }}">
-</head>
-<body>
-    <nav>
-        <h1>Culinar<img src="{{ url_for('static', filename='assets/utensils.svg') }}"></h1>
-        <p>login</p>
-    </nav>
-    <div class="container-pai">
-        <h2>aqui você encontra uma receita do seu jeitinho...</h2>
-        <p>Clique no botão abaixo e gere uma receita especialmente feita para você com a ajuda da inteligência artificial.</p>
-        <button>gerar nova receita!</button>
+{% extends "layout.html" %}
 
-        <div class="container-favoritos">
-            <h2><img src="{{ url_for('static', filename='assets/favorite.svg') }}">Meus Favoritos</h2>
+{% block title %}CulinarIA{% endblock %}
 
-            <div class="favoritos">
+{% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='menu/menu.css') }}"> {% endblock %}
 
+{% block content %}
+
+</style>
+
+<main class="container">
+    <h1>Bem vindo de volta, [Nome da pessoa]</h1>
+    <p class="description">
+        Clique no botão abaixo e gere uma receita especialmente feita para você <br>
+        com a ajuda da Inteligência artificial.
+    </p>
+    <button class="generate-btn" onclick="window.location.href='{{ url_for('recipe.new_recipe') }}'"><strong>Gerar uma nova receita!</strong></button>
+
+    <div class="favorites-section">
+        <h2 class="favorites-title">
+            <img src="{{ url_for('static', filename='assets/favorite.svg')}}"> Meus favoritos
+        </h2>
+        <div class="favorites-grid">
+            <div class="recipe-card">
+                <h3>Pastel de frango no forno</h3>
+                <span class="heart-icon">❤️</span>
+            </div>
+            <div class="recipe-card">
+                <h3>Pastel de frango no forno</h3>
+                <span class="heart-icon">❤️</span>
             </div>
         </div>
     </div>
-</body>
-</html>
+</main>
+
+{% endblock %}
+
+{% block script %} <script src="{{ url_for('static', filename='script.js') }}"></script> {% endblock %}
