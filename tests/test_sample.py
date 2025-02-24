@@ -1,4 +1,4 @@
-from app.routes import generate_message, generate
+from app.blueprints.recipe import generate_message, generate
 import pytest
 
 

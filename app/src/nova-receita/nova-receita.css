@@ -1,0 +1,153 @@
+/* Arquivo de estilização da página HTML */
+/* Reseta configurações padrões do DOM para facilitar estilização */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* Utilizamos a função Roboto para o corpo do texto e Playwrite HR Lijeva para o nome do site*/
+body {
+    color: #f6f6f6;
+    color: #000;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* A configuração abaixo permite a responsividade do site / O modelo mobile */
+@media (max-width: 800px) {
+    
+    .tela{
+        flex-direction: column;
+    }
+
+    header{
+       justify-content: center;
+       
+    }
+    
+}
+
+/* O código abaixo configura o cabeçalho */
+header {
+    display: flex;
+    font-family: "Playwrite HR Lijeva";
+    font-optical-sizing: auto;
+    padding: 10px 0 10px 0;
+    background-color: #EB6E00;
+    color: #fff;
+    
+    .text-header{
+        margin-left: 10px;
+        font-size: 36px;
+    }
+}
+
+i{
+    font-size: 45px;
+    align-self: center;
+}
+.logo{
+    margin-left: 100px;
+    display: flex;
+}
+
+/* O código abaixo estiliza o contêiner tela, onde o formulário e o quadro de geração da receita residem */
+.tela {
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    gap: 20px;
+
+}
+
+/* O código abaixo estiliza o formulário */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    gap: 10px;
+   
+    justify-content: center;
+    padding: 1rem;
+}
+
+.txt-grande {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form input,
+.form select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+
+}
+
+button[type="submit"] {
+    background-color: #EB6E00;
+    color: #fff;
+    font-weight: bold;
+    width: 50%;
+    align-self: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+button[type="submit"]:hover {
+    background-color: #e64a19;
+}
+
+.porcoes-pratos {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    div {
+        flex: 1;
+    }
+}
+
+.checkbox-ingredientes{
+    display: flex;
+    align-items: baseline;
+    margin-top: -20px;
+}
+
+#apenas-ingredientes{
+    width: auto;
+    margin-right: 10px;
+}
+/* O código abaixo estiliza o contâiner onde será contido a receita gerada */
+.receita-container{
+    max-width: 800px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    align-self: stretch;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 20px;
+    padding: 100px;
+}
+.receita{
+    color: #757474a9;
+}
+

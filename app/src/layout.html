@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CulinarIA{% endblock %}</title>
+    {% block style %}<link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+
+        <div class="logo" onclick="window.location.href='{{ url_for('menu.menu') }}'">
+            <h2>
+                Culinar<img src="{{ url_for('static', filename='assets/utensils.svg') }}" class="garfo-e-faca-icon">
+            </h2>
+            
+        </div>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.profile') }}" class="profile-btn">
+                <img src="{{ url_for('static', filename='assets/profile-icon.svg') }}" alt="Perfil">
+            </a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}" class="login-btn">Login</a>
+        {% endif %}
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            }
+
+            header {
+                padding: 20px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: white;
+            }
+
+            body {
+                padding: 0px 80px;
+                background-color: #fff;
+                color: #333;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .garfo-e-faca-icon {
+                width: 35px;
+                height: auto;
+                filter: invert(0%) brightness(20%);
+            }
+
+            .login-btn {
+                padding: 8px 24px;
+                border: 2px solid #F5AD00;
+                border-radius: 20px;
+                color: #F5AD00;
+                background: none;
+                cursor: pointer;
+                font-weight: 500;
+                text-decoration: none;
+                transition: all 0.2s;
+
+            }
+
+            .login-btn:hover{
+                background: #F5AD00;
+                color:#fff
+            }
+            
+            .profile-btn {
+                width: 45px;
+                color: #F5AD00;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 24px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .main-card {
+                width: 100%;
+                border-radius: 15px;
+                border: 1px solid #9e9e9e;
+                min-height: 80vh;
+            }
+        </style>
+    </header>
+
+    <div class="main-card">
+        {% block content %}
+        <!-- O conteúdo específico da página vai aqui -->
+        {% endblock %}
+    </div>
+</body>
+{% block script %}<script src="{{ url_for('static', filename='script.js') }}"></script>{% endblock %}
+</html>

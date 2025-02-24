@@ -1,0 +1,78 @@
+@import "../style.css";
+
+body{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    color: #fff;
+    height: 100vh;
+}
+
+div{
+    place-content: center;
+}
+
+h1{
+    color: var(--branco);
+    text-align: center;
+    font-size: 5.5rem;
+}
+
+h1 img{
+    width: 75px;
+    height: 78px; 
+    margin-bottom: -2px;
+}
+
+form{
+    width: 415px;
+    display: grid;
+    gap: 20px;
+    justify-self: center;
+}
+
+form input{
+    border: 0;
+    background-color: var(--branco);
+}
+
+.checkbox{
+    font-size: 1rem;
+    font-weight: 400;
+    display: flex;
+}
+.checkbox input{
+   margin-right: 5px;
+   width: 18px;
+   height: 17px;
+   
+}
+
+form a{
+    color: #fff;
+    justify-self: center;
+    margin-top: 18px;
+    font-weight: 500;    
+}
+
+form a:hover{
+    color: var(--laranja-escuro);
+}
+
+form a:first-of-type{
+    border-bottom: 1px solid #fff;
+    width: fit-content;
+}
+
+form a:first-of-type:hover{
+    border-bottom: 1px solid var(--laranja-escuro);
+}
+
+form p{
+    margin-top: 18px;
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+form button{
+    margin-top: 18px;
+}
