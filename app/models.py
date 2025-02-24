@@ -1,1 +1,0 @@
-# para o banco de dados (não usado por enquano)

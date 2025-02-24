@@ -9,33 +9,31 @@
 1. Versionamento e Problemas Conhecidos
 1. Créditos
 
-### 🗂️ Estrutura de Diretórios
----
-
-A estrutura de arquivos do projeto esta da seguinte forma:
-
-```
-culinarIA/
-├── app/
-│   ├── __init__.py           # Inicialização de app como módulo
-│   ├── routes.py             # Definição das rotas do servidor
-│   ├── models.py             # Definição dos modelos de dados
-│   ├── templates/            # Arquivos de template (HTML)
-│   │   ├── index.html        # Página principal do aplicativo
-│   │   └── nova_receita.html # Página para gerar novas receitas
-│   └── static/               # Arquivos estáticos (JS, CSS)
-│       ├── main.js           # Código JavaScript para interatividade
-│       └── style.css         # Estilos do site
-└── main.py                   # Arquivo principal para execução do aplicativo
-```
-
 ### ⚙️ Dependências
 ---
 
-instale as dependências com os seguintes comandos:
+Instale as dependências com os seguintes comandos:
 
 ```bash
 pip install -r requirements.txt
+```
+### Habilitar o mongoDB:
+---
+```bash
+mongod
+```
+Caso esteja criando o banco pela primeria vez abra o shell para criar o banco e suas coleções:
+```bash
+mongosh
+```
+Crie o banco de dados `culinaria`
+```bash
+use culinaria
+```
+As coleções são criadas automáticamente quando se insere um documento, mas podem ser criadas assim:
+```bash
+db.createCollection("users")
+db.createCollection("recipes")
 ```
 
 ### 💻 Execute o aplicativo:
