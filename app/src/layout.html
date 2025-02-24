@@ -21,7 +21,6 @@
                 <img src="{{ url_for('static', filename='assets/profile-icon.svg') }}" alt="Perfil">
             </a>
         {% else %}
-
             <a href="{{ url_for('auth.login') }}" class="login-btn">Login</a>
         {% endif %}
         <style>
@@ -58,18 +57,25 @@
 
             .login-btn {
                 padding: 8px 24px;
-                border: 2px solid #FFA500;
+                border: 2px solid #F5AD00;
                 border-radius: 20px;
-                color: #FFA500;
+                color: #F5AD00;
                 background: none;
                 cursor: pointer;
                 font-weight: 500;
                 text-decoration: none;
+                transition: all 0.2s;
+
             }
 
+            .login-btn:hover{
+                background: #F5AD00;
+                color:#fff
+            }
+            
             .profile-btn {
                 width: 45px;
-                color: #FFA500;1
+                color: #F5AD00;
             }
 
             .logo {
