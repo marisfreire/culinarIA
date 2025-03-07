@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen w-screen">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full h-full flex flex-col justify-center items-center">
+        <header class="flex justify-between items-center w-full max-w-4xl mb-6">
+            <h1 class="text-2xl font-bold flex items-center">
+                <img src="Component3.png" alt="Logo" class="h-12 mr-4">
+            </h1>
+            <button class="bg-orange-600 text-white px-4 py-3 rounded-2xl shadow hover:bg-orange-500 transition">Gerar Receita</button>
+        </header>
+        <main class="w-full max-w-4xl">
+            <!-- Container com fundo cinza -->
+            <div class="bg-gray-200 p-6 rounded-lg w-full">
+                <h2 class="text-xl font-semibold mb-4">Configurações de conta</h2>
+                <h2 class="text-xl font-semibold mb-4 border-t border-gray-800"></h2>
+                <!-- Grid para Nome e Email lado a lado -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="nome" class="font-medium block mb-1">Nome</label>
+                        <input type="text" id="nome" placeholder="Nome do usuário" class="border p-2 rounded w-full mb-4 bg-gray-300" disabled>
+                    </div>
+                    <div>
+                        <label for="email" class="font-medium block mb-1">E-mail</label>
+                        <input type="email" id="email" placeholder="email@usuario.com" disabled class="border p-2 rounded w-full bg-gray-300">
+                    </div>
+                </div>
+
+                <!-- Grid para Nível Culinário e Restrições -->
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="restricoes" class="font-medium block mb-1">Restrições Alimentares</label>
+                        <textarea id="restricoes" placeholder="Listam-se aqui as restrições alimentares" disabled class="border p-2 rounded w-full bg-gray-300"></textarea>
+                    </div>
+                    <div>
+                        <label for="nivel" class="font-medium block mb-1">Nível Culinário</label>
+                        <input type="text" id="nivel" placeholder="Nível de expertise culinária" disabled class="border p-2 rounded w-full bg-gray-300">
+                         <div class="flex flex-col space-y-2 mt-4">
+                                <button class="bg-green-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-green-600 transition">Alterar minhas informações</button>
+                                <button class="bg-yellow-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-yellow-600 transition">Alterar minha senha</button>
+                        </div>
+                </div>
+                 </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

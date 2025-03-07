@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geração de Receita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="bg-white p-8 rounded-lg shadow-md w-full h-full flex flex-col justify-center items-center">
+        <header class="flex justify-between items-center w-full max-w-4xl mb-6">
+            <h1 class="text-2xl font-bold flex items-center ml-[-112px]">
+                <img src="Component3.png" alt="Logo" class="h-8 mr-3 ">
+            </h1>
+            <button class="border-2 border-orange-500 text-orange-500 font-semibold text-lg px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white transition ml-10">login</button>
+            <img id="userImage" src="user.png" alt="Perfil" class="hidden w-10 h-10 rounded-full cursor-pointer" onclick="openUserMenu()">
+        </header>
+    
+    <main id="recipeForm" class="w-full max-w-6xl">
+        <p class="text-gray-400 mb-6 text-lg text-center text-sm-7">Selecione, gere e cozinhe receitas feitas especialmente para você</p>
+        <div class="bg-white p-6 rounded-lg w-78/100 border border-black mt-12 mx-auto">
+        <label class="block mb-2 font-semibold text-lg text-center">Quais ingredientes devem estar na sua receita?</label>
+        <input type="text" id="ingredients" class="w-full border p-3 mb-4 rounded text-lg" placeholder="Ex: Arroz integral, pepino japonês...">
+        <div class="flex items-center justify-center mb-6">
+            <input type="checkbox" id="strictIngredients" class="mr-2 w-4 h-4">
+            <label for="strictIngredients" class="text-lg text-gray-700 text-sm-11 text-center">
+                Incluir <span class="text-orange-500 text-sm-11 font-bold">somente</span> os ingredientes listados na receita
+            </label>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+                <label class="block text-lg font-semibold">Tempo de cozimento (<span id="cookTimeValue">10</span> min)</label>
+                <input type="range" min="10" max="120" id="cookTime"  oninput="updateCookTime()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
+            </div>
+            <div>
+                <label class="block text-lg font-semibold">Porções (<span id="porcaoqntdvalue">1</span>)</label>
+                <input type="range" min="1" max="20" id="porcaoqntd" oninput="updatePorcaoQntd()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
+                
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+                <label class="block text-lg font-semibold">Qual o tipo de culinária da sua receita?</label>
+                <input type="text" id="cuisine" class="w-full border p-3 rounded text-lg" placeholder="Ex: Italiana, Vegana, etc.">
+            </div>
+            <div>
+                <label class="block text-lg font-semibold">Qual é a refeição da sua receita?</label>
+                <select id="mealType" class="w-full border p-3 rounded text-lg">
+                    <option>Café da Manhã</option>
+                    <option>Almoço</option>
+                    <option>Jantar</option>
+                    <option>Sobremesa</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="cookingtype" class="mr-2 w-4 h-4">
+                <label for="cookingtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
+            </div>
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="mealtype" class="mr-2 w-4 h-4">
+                <label for="mealtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
+            </div>
+            
+        </div>
+        
+        
+        <div class="flex justify-center mt-6">
+            <button onclick="generateRecipe()" 
+                class="bg-orange-600 text-white px-6 py-3 rounded-2xl font-semibold text-xl shadow-md 
+                       hover:bg-orange-500 transition w-full max-w-xs">
+                Gerar Receita
+            </button>
+        </div>
+        
+    </div>
+    </main>
+
+    <section id="recipeResult" class="hidden w-full max-w-6xl mt-8">
+        <p class="text-gray-500 text-center">Prontinho! Aproveite sua nova deliciosa receita :)</p>
+        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-gray-300">
+                <div class="flex justify-between items-start">
+                    <h2 id="recipeTitle" class="text-2xl font-bold">Título da Receita</h2>
+                    <button id="favoriteBtn" class="text-gray-400 text-2xl">&#9829;</button>
+                </div>
+                
+                <div class="flex justify-around text-gray-600 mt-2">
+                    <div class="flex items-center">
+                        <img src="barrinhas.png" alt="Dificuldade" class="w-5 h-5 mr-2">
+                        <span id="difficulty">Dificuldade</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="Clock.png" alt="Tempo de preparo" class="w-5 h-5 mr-2">
+                        <span id="prepTime">Tempo de preparo</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="Vector.png" alt="Tipo de refeição" class="w-5 h-5 mr-2">
+                        <span id="mealType">Tipo de refeição</span>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="flex justify-center mt-6 space-x-4">
+                    <button class="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-orange-500 transition">Gerar nova receita</button>
+                    <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-green-500 transition">Gerar lista de compras</button> 
+            </div>
+            <button onclick="backToForm()" class="mt-6 bg-white-500 text-black px-9 py-10 rounded font-semibold text-xl ml-4">
+                &#8592;
+            </button>        
+        </div>
+        <script>
+
+            // Preenchendo os dados na tela
+            document.getElementById("recipeTitle").innerText = recipeData.title;
+            document.getElementById("difficulty").innerText = recipeData.difficulty;
+            document.getElementById("prepTime").innerText = recipeData.prepTime;
+            document.getElementById("mealType").innerText = recipeData.mealType;
+            
+            // Ingredientes
+            document.getElementById("ingredientsList").innerHTML = recipeData.ingredients.map(ing => `<li>${ing}</li>`).join('');
+            
+            // Passos
+            document.getElementById("recipeSteps").innerHTML = recipeData.steps.map(step => `<li>${step}</li>`).join('');
+            
+            // Funcionalidade do botão de favoritar
+            const favoriteBtn = document.getElementById("favoriteBtn");
+            favoriteBtn.addEventListener("click", () => {
+                recipeData.isFavorite = !recipeData.isFavorite;
+                favoriteBtn.style.color = recipeData.isFavorite ? "orange" : "gray";
+            });
+        </script>
+
+    </div>
+    </section>
+
+    <script>
+        function updateCookTime() {
+            document.getElementById("cookTimeValue").innerText = document.getElementById("cookTime").value;
+        }
+        
+        function updatePorcaoQntd() {
+            document.getElementById("porcaoqntdvalue").innerText = document.getElementById("porcaoqntd").value;
+        }
+
+
+        function generateRecipe() {
+            document.getElementById("recipeForm").classList.add("hidden");
+            document.getElementById("recipeResult").classList.remove("hidden");
+        }
+        
+        function backToForm() {
+            document.getElementById("recipeResult").classList.add("hidden");
+            document.getElementById("recipeForm").classList.remove("hidden");
+        }
+    </script>
+
+    <script>
+    //login
+    const isLogged = localStorage.getItem("userLogged"); 
+
+    if (isLogged) {
+        document.getElementById("btnNotLogged").classList.add("hidden");
+        document.getElementById("userImage").classList.remove("hidden");
+    } else {
+        document.getElementById("btnNotLogged").classList.remove("hidden");
+    }
+    </script>
+
+</body>
+</html>
