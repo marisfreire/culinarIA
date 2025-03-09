@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}Nova Receita{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='nova-receita/geracaodereceita.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="generate-title" id="generateTitle">
+        <h1>Geração de Receita</h1>
+        <p class="description">
+            Selecione, gere e cozinhe receitas feitas especialmente para você
+        </p>
+    </div>
+
+    <div class="recipe-form" id="recipeForm">
+        <div class="form-group">
+            <label>Quais ingredientes devem estar na sua receita?</label>
+            <input type="text" id="ingredients" placeholder="Ex: Arroz integral, pepino japonês...">
+            <div class="checkbox-container">
+                <input type="checkbox" id="strictIngredients">
+                <label for="strictIngredients">
+                    Incluir <span class="highlight">somente</span> os ingredientes listados na receita
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Tempo de cozimento (<span id="cookTimeValue">10</span> min)</label>
+                <input type="range" min="10" max="120" id="cookTime" oninput="updateCookTime()">
+            </div>
+            <div class="form-group">
+                <label>Porções (<span id="porcaoqntdvalue">1</span>)</label>
+                <input type="range" min="1" max="20" id="porcaoqntd" oninput="updatePorcaoQntd()">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Qual o tipo de culinária da sua receita?</label>
+                <input type="text" id="cuisine" placeholder="Ex: Italiana, Vegana, etc.">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="cookingtype">
+                    <label for="cookingtype">Prefiro não informar</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Qual é a refeição da sua receita?</label>
+                <select id="mealType">
+                    <option>Café da Manhã</option>
+                    <option>Almoço</option>
+                    <option>Jantar</option>
+                    <option>Sobremesa</option>
+                </select>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="mealtype">
+                    <label for="mealtype">Prefiro não informar</label>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="generateRecipe()" class="generate-btn"><strong>Gerar Receita</strong></strong></button>
+    </div>
+
+    <div class="recipe-result hidden" id="recipeResult">
+        <p class="success-message">Prontinho! Aproveite sua nova deliciosa receita :)</p>
+        
+        <div class="recipe-card">
+            <div class="recipe-header">
+                <h2 id="recipeTitle">Título da Receita</h2>
+                <button id="favoriteBtn" class="btn-favorite">♥</button>
+            </div>
+            
+            <div class="recipe-info">
+                <div class="info-item">
+                    <img src="{{ url_for('static', filename='assets/barrinhas.png') }}" alt="Dificuldade">
+                    <span id="difficulty">Dificuldade</span>
+                </div>
+                <div class="info-item">
+                    <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="Tempo">
+                    <span id="prepTime">Tempo de preparo</span>
+                </div>
+                <div class="info-item">
+                    <img src="{{ url_for('static', filename='assets/vector.png') }}" alt="Refeição">
+                    <span id="mealType">Tipo de refeição</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-orange" onclick="generateRecipe()"><strong>Gerar nova receita</strong></button>
+            <button class="btn-green"><strong>Gerar lista de compras</strong></button>
+        </div>
+        
+
+    </div>
+</div>
+
+<script>
+function updateCookTime() {
+    document.getElementById("cookTimeValue").innerText = document.getElementById("cookTime").value;
+}
+
+function updatePorcaoQntd() {
+    document.getElementById("porcaoqntdvalue").innerText = document.getElementById("porcaoqntd").value;
+}
+
+function generateRecipe() {
+    document.getElementById("recipeForm").classList.add("hidden");
+    document.getElementById("recipeResult").classList.remove("hidden");
+    document.getElementById("generateTitle").classList.add("hidden");
+}
+
+function backToForm() {
+    document.getElementById("recipeResult").classList.add("hidden");
+    document.getElementById("recipeForm").classList.remove("hidden");
+    document.getElementById("generateTitle").classList.remove("hidden");
+}
+
+// Funcionalidade do botão de favoritar
+document.getElementById("favoriteBtn").addEventListener("click", function() {
+    this.classList.toggle("active");
+});
+</script>
+{% endblock %}

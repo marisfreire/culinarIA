@@ -6,8 +6,6 @@
 
 {% block content %}
 
-</style>
-
 <main class="container">
     {% if current_user.is_authenticated %}
         <h1>Bem vindo de volta, {{ current_user.name.split()[0] }}</h1>
@@ -26,7 +24,7 @@
         </h2>
         <div class="favorites-grid">
             {% if current_user.is_authenticated %}
-            {% for c in range(102): %}
+            {% for c in range(10): %}
                 <div class="recipe-card">
                     <h3>Pastel de frango no forno</h3>
                     <span class="heart-icon">❤️</span>
