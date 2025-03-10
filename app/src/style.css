@@ -58,10 +58,15 @@ button{
     font-size: 1.2rem;
 }
 
-.campo-input input{
+.campo-input input, select{
     padding-left: 10px;
     font-size: 1.125rem;
     margin-top: 10px;
     height: 50px;
     border-radius: 5px;
 }
+
+.logo h2{
+    color: var(--cinza);
+}
+

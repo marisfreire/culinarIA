@@ -1,20 +1,24 @@
 @import "../style.css";
 
 body{
-    display: grid;
-    grid-template-columns: 50% 50%;
+    display: flex;
     color: #fff;
     height: 100vh;
 }
 
 div{
-    place-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 50%;
 }
 
 h1{
     color: var(--branco);
     text-align: center;
     font-size: 5.5rem;
+    padding-bottom: 1rem;
 }
 
 h1 img{

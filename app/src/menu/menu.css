@@ -1,25 +1,32 @@
 @import "../style.css";
 
 body {
-    background-color: #fff;
+    background-color: var(--branco);
+}
+
+h1{
+    font-weight: 700;
+    letter-spacing: -3px;
+    color: var(--cinza);
 }
 
 .container {
-    max-width: 800px;
+    width: 80%;
     margin: 2rem auto;
     padding: 0 1rem;
     text-align: center;
 }
 
 .description {
-    color: #665;
+    color: var(--cinza);
     margin-bottom: 1.5rem;
+    font-weight: 600;
     font-size: 0.9rem;
 }
 
 .generate-btn {
-    background-color: #F16224;
-    color: white;
+    background-color: var(--laranja);
+    color: var(--branco);
     border: none;
     padding: 1rem 2rem;
     border-radius: 20px;
@@ -30,7 +37,7 @@ body {
 }
 
 .generate-btn:hover {
-    background-color: #f4511e;
+    background-color: var(--laranja);
 }
 
 .favorites-section {
@@ -75,7 +82,7 @@ body {
 
 .hide-favorites {
     position: absolute;
-    color: #111111;
+    color: #000;
     top: 2.5rem;
     left: 0;
     width: 100%;
@@ -92,8 +99,8 @@ body {
 }
 
 .recipe-card {
-    background-color: #00BF63;
-    color: white;
+    background-color: var(--verde);
+    color: #fff;
     padding: 1rem;
     border-radius: 0.5rem;
     position: relative;
