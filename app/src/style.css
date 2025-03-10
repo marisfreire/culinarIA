@@ -58,7 +58,7 @@ button{
     font-size: 1.2rem;
 }
 
-.campo-input input{
+.campo-input input, select{
     padding-left: 10px;
     font-size: 1.125rem;
     margin-top: 10px;
