@@ -6,7 +6,7 @@ import openai
 # rota para a parte de geração de receitas
 @recipe_bp.route('/', methods=['POST', 'GET'])
 def new_recipe():
-    return render_template("nova-receita/geracaodereceita.html")
+    return render_template("nova-receita/nova-receita.html")
 
 
 # resposta para a receita 

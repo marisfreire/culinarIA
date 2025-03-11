@@ -1,111 +1,114 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- importando fonte do google fonts e aplicação do styles css-->
-        <title>CulinarIA</title>
-        <link href="https://fonts.googleapis.com/css2?family=Playwright+Hrvatska+Lijeva&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='nova-receita/nova-receita.css') }}">
+{% extends "layout.html" %}
+
+{% block title %}Nova receita{% endblock %}
+
+{% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
+
+{% block content %}
+    <div class="bg-white p-8 rounded-lg shadow-md w-full h-full flex flex-col justify-center items-center">
+    
+    <main id="recipeForm" class="w-full max-w-6xl">
+        <p class="text-gray-400 mb-6 text-lg text-center text-sm-7">Selecione, gere e cozinhe receitas feitas especialmente para você</p>
+        <div class="bg-white p-6 rounded-lg w-78/100 border border-black mt-12 mx-auto">
+        <label class="block mb-2 font-semibold text-lg text-center">Quais ingredientes devem estar na sua receita?</label>
+        <input type="text" id="ingredients" class="w-full border p-3 mb-4 rounded text-lg" placeholder="Ex: Arroz integral, pepino japonês...">
+        <div class="flex items-center justify-center mb-6">
+            <input type="checkbox" id="strictIngredients" class="mr-2 w-4 h-4">
+            <label for="strictIngredients" class="text-lg text-gray-700 text-sm-11 text-center">
+                Incluir <span class="text-orange-500 text-sm-11 font-bold">somente</span> os ingredientes listados na receita
+            </label>
+        </div>
         
-        <!-- otimizando o carregamento da fonte-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Playwrite+HR+Lijeva:wght@100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
-    </head>
-
-    <!-- logotipo e o título-->
-<body>
-    <header>
-        <div class="logo">
-        <i class="fa-solid fa-utensils"></i>
-        <h1 class="text-header">
-            CulinarIA
-        </h1> </div>
-    </header>
-
-    <!-- O principal, formulário para o usário colocar os inputs para gerar a receita-->
-    <main class="tela">
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+                <label class="block text-lg font-semibold">Tempo de cozimento (<span id="cookTimeValue">10</span> min)</label>
+                <input type="range" min="10" max="120" id="cookTime"  oninput="updateCookTime()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
+            </div>
+            <div>
+                <label class="block text-lg font-semibold">Porções (<span id="porcaoqntdvalue">1</span>)</label>
+                <input type="range" min="1" max="20" id="porcaoqntd" oninput="updatePorcaoQntd()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
+                [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
+                
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+                <label class="block text-lg font-semibold">Qual o tipo de culinária da sua receita?</label>
+                <input type="text" id="cuisine" class="w-full border p-3 rounded text-lg" placeholder="Ex: Italiana, Vegana, etc.">
+            </div>
+            <div>
+                <label class="block text-lg font-semibold">Qual é a refeição da sua receita?</label>
+                <select id="mealType" class="w-full border p-3 rounded text-lg">
+                    <option>Café da Manhã</option>
+                    <option>Almoço</option>
+                    <option>Jantar</option>
+                    <option>Sobremesa</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="cookingtype" class="mr-2 w-4 h-4">
+                <label for="cookingtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
+            </div>
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="mealtype" class="mr-2 w-4 h-4">
+                <label for="mealtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
+            </div>
             
-            <form id="geradorReceitas" class="form" method="post">
+        </div>
+        
+        
+        <div class="flex justify-center mt-6">
+            <button onclick="generateRecipe()" 
+                class="bg-orange-600 text-white px-6 py-3 rounded-2xl font-semibold text-xl shadow-md 
+                       hover:bg-orange-500 transition w-full max-w-xs">
+                Gerar Receita
+            </button>
+        </div>
+        
+    </div>
+    </main>
 
-                <!-- input dos ingredientes, o placeholder mostra um exemplo de input-->
-                <div>
-
-                    <label class="txt-grande" for="ingredientes">Ingredientes:</label>
-                    <input type="text" id="ingredientes" name="ingredientes" placeholder="Ex: Arroz, ovo, pepino japônes, etc." aria-label="Ingredientes">
-                </div>
-
-                    <!-- checkbox que indica se apenas os ingredientes listados devem ser usados -->
-                <div class="checkbox-ingredientes">
-                    <label for="apenas-ingredientes" ></label>
-                        <input type="checkbox" id="apenas-ingredientes" name="apenas-ingredientes"/>
-                        Usar ingredientes utilizados</label>
-                </div>
-
-                 <!-- input dos eletrodomésticos-->
-                <div>
-
-                    <label class="txt-grande" for="eletrodomesticos">Eletrodomésticos:</label>
-                    <input type="text" id="eletrodomesticos" name="eletrodomesticos" placeholder="Ex: Airfryer, microondas, fogão a gás" aria-label="Eletrodomésticos">
-                </div>
-
-                <!-- input dos restrições alimentares-->
-                <div>
-                    <label class="txt-grande" for="restricoes">Restrições Alimentares:</label>
-                    <input type="text" id="restricoes" name="restricoes" placeholder="Ex: Intolerância a lactose, zero açúcar, doença celíaca" aria-label="Restrições Alimentares">
-                </div>
-
-                <!-- input da culinária-->
-                <div>
-                    <label class="txt-grande" for="culinaria">Culinária:</label>
-                    <input type="text" id="culinaria" name="culinaria" placeholder="Ex: Vegana, Japonesa, Brasileira" aria-label="Culinária">
+    <section id="recipeResult" class="hidden w-full max-w-6xl mt-8">
+        <p class="text-gray-500 text-center">Prontinho! Aproveite sua nova deliciosa receita :)</p>
+        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-gray-300">
+                <div class="flex justify-between items-start">
+                    <h2 id="recipeTitle" class="text-2xl font-bold">Título da Receita</h2>
+                    <button id="favoriteBtn" class="text-gray-400 text-2xl">&#9829;</button>
                 </div>
                 
-                <!-- caixa de seleção do tipo de prato-->
-                <div class="porcoes-pratos">
-
-                    <div>  
-                        <label class="txt-grande" for="prato">Prato:</label>
-                        <select name="refeicao" id="refeicao" aria-label="Prato">
-                            <option value="café da manhã">Café da Manhã</option>
-                            <option value="almoço">Almoço</option>
-                            <option value="jantar">Jantar</option>
-                            <option value="entrada">Entrada</option>
-                            <option value="sobremesa">Sobremesa</option>
-                        </select>
+                <div class="flex justify-around text-gray-600 mt-2">
+                    <div class="flex items-center">
+                        <img src="{{ url_for('static', filename='assets/barrinhas.png') }}" alt="Dificuldade" class="w-5 h-5 mr-2">
+                        <span id="difficulty">Dificuldade</span>
                     </div>
-
-                    <!-- caixa de seleção da quantidade de poções-->
-                    <div>
-                        <label class="txt-grande" for="porcoes">Porções:</label>
-                        <select name="porcoes" id="porcoes" aria-label="Porções">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <div class="flex items-center">
+                        <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="Tempo de preparo" class="w-5 h-5 mr-2">
+                        <span id="prepTime">Tempo de preparo</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img src="{{ url_for('static', filename='assets/vector.png') }}" alt="Tipo de refeição" class="w-5 h-5 mr-2">
+                        <span id="mealType">Tipo de refeição</span>
                     </div>
                 </div>
-
-                <!-- botão que envia os dados do formulário-->
-                <button type="submit">GERAR RECEITA</button>
-            </form>
                 
-            <!-- div que exibe a receita gerada com base nos inputs do usuário-->
-            <div class="receita-container">
-                <h2 class="receita"> Preencha suas preferências e veja sua receita aparecer aqui :) </h2>
-                <div id="body"></div>
             </div>
 
-            <!-- importando: font awesome para ícones;
-             biblioteca para coneverter texto markdown em html
-             Um script local (script.js) para gerenciar interações na página -->
-    </main>
-    <script src="https://kit.fontawesome.com/8e9a566064.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}"></script> 
-</body>
-</html>
+            <div class="flex justify-center mt-6 space-x-4">
+                    <button class="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-orange-500 transition">Gerar nova receita</button>
+                    <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-green-500 transition">Gerar lista de compras</button> 
+            </div>
+            <button onclick="backToForm()" class="mt-6 bg-white-500 text-black px-9 py-10 rounded font-semibold text-xl ml-4">
+                &#8592;
+            </button>        
+        </div>
+    </div>
+    </section>
+{% endblock %}
+
+{% block script %} <script  src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}" ></script> {% endblock %}
