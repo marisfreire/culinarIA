@@ -11,10 +11,18 @@ class User(UserMixin):
             self.id = user_data['user_id']
             self.email = user_data['email']
             self.name = user_data['name']
+            self.preferences = user_data.get('preferences', {
+                'dietary_restrictions': [],
+                'skill_level': 'iniciante'
+            })
         else:
             self.id = None
             self.email = None
             self.name = None
+            self.preferences = {
+                'dietary_restrictions': [],
+                'skill_level': 'iniciante'
+            }
 
     def get_id(self):
         return str(self.id)
