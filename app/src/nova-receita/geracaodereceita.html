@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geração de Receita</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block title %}Nova receita{% endblock %}
+
+{% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
+
+{% block content %}
     <div class="bg-white p-8 rounded-lg shadow-md w-full h-full flex flex-col justify-center items-center">
-        <header class="flex justify-between items-center w-full max-w-4xl mb-6">
-            <h1 class="text-2xl font-bold flex items-center ml-[-112px]">
-                <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo" class="h-8 mr-3 ">
-            </h1>
-            <button class="border-2 border-orange-500 text-orange-500 font-semibold text-lg px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white transition ml-10">login</button>
-            <img id="userImage" src="{{ url_for('static', filename='assets/profile-icon.svg') }}" alt="Perfil" class="hidden w-10 h-10 rounded-full cursor-pointer" onclick="openUserMenu()">
-        </header>
     
     <main id="recipeForm" class="w-full max-w-6xl">
         <p class="text-gray-400 mb-6 text-lg text-center text-sm-7">Selecione, gere e cozinhe receitas feitas especialmente para você</p>
@@ -174,5 +165,4 @@
     }
     </script>
 
-</body>
-</html>
+{% endblock %}
