@@ -11,9 +11,9 @@
         <p class="text-gray-400 mb-6 text-lg text-center text-sm-7">Selecione, gere e cozinhe receitas feitas especialmente para você</p>
         <div class="bg-white p-6 rounded-lg w-78/100 border border-black mt-12 mx-auto">
         <label class="block mb-2 font-semibold text-lg text-center">Quais ingredientes devem estar na sua receita?</label>
-        <input type="text" id="ingredients" class="w-full border p-3 mb-4 rounded text-lg" placeholder="Ex: Arroz integral, pepino japonês...">
+        <input type="text" name="ingredientes" id="ingredients" class="w-full border p-3 mb-4 rounded text-lg" placeholder="Ex: Arroz integral, pepino japonês...">
         <div class="flex items-center justify-center mb-6">
-            <input type="checkbox" id="strictIngredients" class="mr-2 w-4 h-4">
+            <input type="checkbox" name="apenas-ingredientes id="strictIngredients" class="mr-2 w-4 h-4">
             <label for="strictIngredients" class="text-lg text-gray-700 text-sm-11 text-center">
                 Incluir <span class="text-orange-500 text-sm-11 font-bold">somente</span> os ingredientes listados na receita
             </label>
@@ -22,13 +22,13 @@
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="block text-lg font-semibold">Tempo de cozimento (<span id="cookTimeValue">10</span> min)</label>
-                <input type="range" min="10" max="120" id="cookTime"  oninput="updateCookTime()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                <input type="range" min="10" max="120" name="tempo" id="cookTime"  oninput="updateCookTime()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
                 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
             </div>
             <div>
                 <label class="block text-lg font-semibold">Porções (<span id="porcaoqntdvalue">1</span>)</label>
-                <input type="range" min="1" max="20" id="porcaoqntd" oninput="updatePorcaoQntd()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
+                <input type="range" min="1" max="20" name="porcoes" id="porcaoqntd" oninput="updatePorcaoQntd()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
                 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
                 
@@ -38,11 +38,11 @@
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="block text-lg font-semibold">Qual o tipo de culinária da sua receita?</label>
-                <input type="text" id="cuisine" class="w-full border p-3 rounded text-lg" placeholder="Ex: Italiana, Vegana, etc.">
+                <input type="text" name="culinaria" id="cuisine" class="w-full border p-3 rounded text-lg" placeholder="Ex: Italiana, Vegana, etc.">
             </div>
             <div>
                 <label class="block text-lg font-semibold">Qual é a refeição da sua receita?</label>
-                <select id="mealType" class="w-full border p-3 rounded text-lg">
+                <select id="mealType" name="refeicao" class="w-full border p-3 rounded text-lg">
                     <option>Café da Manhã</option>
                     <option>Almoço</option>
                     <option>Jantar</option>
@@ -52,11 +52,11 @@
         </div>
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div class="flex items-center mb-6">
-                <input type="checkbox" id="cookingtype" class="mr-2 w-4 h-4">
+                <input type="checkbox" name="nao-informa-culinaria" id="cookingtype" class="mr-2 w-4 h-4">
                 <label for="cookingtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
             </div>
             <div class="flex items-center mb-6">
-                <input type="checkbox" id="mealtype" class="mr-2 w-4 h-4">
+                <input type="checkbox" id="mealtype" name="nao-informa-refeicao" class="mr-2 w-4 h-4">
                 <label for="mealtype" class="text-sm-12 text-gray-600">Prefiro não informar</label>
             </div>
             
@@ -109,6 +109,3 @@
         </div>
     </div>
     </section>
-{% endblock %}
-
-{% block script %} <script  src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}" ></script> {% endblock %}

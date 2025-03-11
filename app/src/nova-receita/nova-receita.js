@@ -10,7 +10,10 @@ submit_btn.addEventListener("click", async (e) => {
         culinaria: document.querySelector('input[name="culinaria"]').value,
         porcoes: document.querySelector('select[name="porcoes"]').value,
         refeicao: document.querySelector('select[name="refeicao"]').value,
-        apenas_ingredientes: document.querySelector('input[name=apenas-ingredientes]').checked
+        apenas_ingredientes: document.querySelector('input[name="apenas-ingredientes"]').checked,
+        tempo: document.querySelector('input[name="tempo"]'),
+        nao_informa_refeicao: document.querySelector('input[name="nao-informa-refeicao"]').checked,
+        nao_informa_culinaria: document.querySelector('input[name="nao-informa-culinaria"]')
     };
     
     const response = await fetch("./resposta", {
