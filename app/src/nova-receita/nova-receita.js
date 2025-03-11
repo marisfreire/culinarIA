@@ -7,9 +7,7 @@ submit_btn.addEventListener("click", async (e) => {
     
     const data = {
         ingredientes: document.querySelector('input[name="ingredientes"]').value,
-        eletrodomesticos: document.querySelector('input[name="eletrodomesticos"]').value,
         culinaria: document.querySelector('input[name="culinaria"]').value,
-        restricoes: document.querySelector('input[name="restricoes"]').value,
         porcoes: document.querySelector('select[name="porcoes"]').value,
         refeicao: document.querySelector('select[name="refeicao"]').value,
         apenas_ingredientes: document.querySelector('input[name=apenas-ingredientes]').checked
@@ -20,8 +18,6 @@ submit_btn.addEventListener("click", async (e) => {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
     });
-    
-
     
     const reader = response.body.getReader();
     let output = "";
@@ -37,7 +33,6 @@ submit_btn.addEventListener("click", async (e) => {
     }
 
 })
-
 
 // Preenchendo os dados na tela
 document.getElementById("recipeTitle").innerText = recipeData.title;
@@ -65,7 +60,6 @@ function updateCookTime() {
 function updatePorcaoQntd() {
     document.getElementById("porcaoqntdvalue").innerText = document.getElementById("porcaoqntd").value;
 }
-
 
 function generateRecipe() {
     document.getElementById("recipeForm").classList.add("hidden");
