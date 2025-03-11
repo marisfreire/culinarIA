@@ -5,54 +5,68 @@
 {% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='menu/menu.css') }}"> {% endblock %}
 
 {% block content %}
+<div class="bg-white p-8 rounded-lg w-full h-full flex flex-col justify-center items-center">
+    <main class="w-full max-w-6xl">
+        <div class="bg-white p-6 rounded-lg border border-black mx-auto">
+        {% if current_user.is_authenticated %}
+            <h1 class="text-3xl font-bold text-center mb-4 tracking-[-0]">Bem vindo de volta, {{ current_user.name.split()[0] }}</h1>
+        {% else %}
+            <h1 class="text-3xl font-bold text-center mb-4 tracking-[-0]">aqui você encontra uma receita do seu jeitinho...</h1>
+        {% endif %}
 
-<main class="container">
-    {% if current_user.is_authenticated %}
-        <h1>Bem vindo de volta, {{ current_user.name.split()[0] }}</h1>
-    {% else %}
-        <h1>aqui você encontra uma receita do seu jeitinho...</h1>
-    {% endif %}
-    <p class="description">
-        Clique no botão abaixo e gere uma receita especialmente <br>
-        feita para você com a ajuda da Inteligência artificial.
-    </p>
-    <button class="generate-btn" onclick="window.location.href='{{ url_for('recipe.new_recipe') }}'"><strong>Gerar uma nova receita!</strong></button>
+        <p class="text-xs text-gray-6f00 mb-6 text-center">
+            Clique no botão abaixo e gere uma receita <br> 
+            especialmente feita para você com a ajuda <br>
+            da Inteligência artificial.
+        </p>
 
-    <div class="favorites-section">
-        <h2 class="favorites-title">
-            <img src="{{ url_for('static', filename='assets/favorite.svg')}}"> Meus favoritos
-        </h2>
-        <div class="favorites-grid">
-            {% if current_user.is_authenticated %}
-            {% for c in range(10): %}
-                <div class="recipe-card">
-                    <h3>Pastel de frango no forno</h3>
-                    <span class="heart-icon">❤️</span>
-                </div>
-            {% endfor %}
-            {% else %}
-            <style>
-                .favorites-grid{
-                    filter: blur(6px);
-                }
-            </style>
-            {% for c in range(6): %}
-                <div class="recipe-card">
-                    <h3>Pastel de frango no forno</h3>
-                    <span class="heart-icon">❤️</span>
-                </div>
-            {% endfor %}
-            </div>
-                <div class="hide-favorites">
-                    <img src="{{ url_for('static', filename='assets/padlock.svg') }}" alt=""><br>
-                    <h3>Entre na sua conta e salve as receitas que mais <br>
-                    gostou para poder acessá-las na hora que quiser!</h3>
-                </div>
-            {% endif %}
+        <div class="flex justify-center mb-10">
+            <button 
+                onclick="window.location.href='{{ url_for('recipe.new_recipe') }}'"
+                class="bg-orange-600 text-white px-6 py-4 rounded-2xl text-2xl hover:bg-orange-500 transition">
+                <strong>Gerar uma nova receita!</strong>
+            </button>
         </div>
-    </div>
-</main>
 
+        <div class="flex flex-col mb-6">
+            <div class="flex items-center gap-2 pl-2 pb-2">
+                <img src="{{ url_for('static', filename='assets/favorite.svg')}}" class="w-6 h-6">
+                <h2 class="text-xl font-semibold ">Meus favoritos</h2>
+            </div>
+            <div class="border-b border-gray-500"></div>
+        </div>
+
+        {% if current_user.is_authenticated %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                {% for c in range(9) %}
+                    <div class="bg-[#00BF63] text-white ml-8 mr-8 p-4 relative">
+                        <h3 class="text-lg mb-4">Pastel de frango no forno</h3>
+                        <span class="absolute top-2 right-2">❤️</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="relative">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 blur-sm">
+                    {% for c in range(6) %}
+                        <div class="bg-[#00BF63] text-white ml-8 mr-8 p-4 relative">
+                            <h3 class="text-lg mb-4">Pastel de frango no forno</h3>
+                            <span class="absolute top-2 right-2">❤️</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <img src="{{ url_for('static', filename='assets/padlock.svg') }}" alt="" class="w-16 mb-4">
+                    <h3 class="text-lg font-semibold">
+                        Entre na sua conta e salve as receitas que mais <br>
+                        gostou para poder acessá-las na hora que quiser!
+                    </h3>
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </main>
+</div>
 {% endblock %}
 
 {% block script %} <script src="{{ url_for('static', filename='script.js') }}"></script> {% endblock %}
