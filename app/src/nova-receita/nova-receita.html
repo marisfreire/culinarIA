@@ -5,7 +5,7 @@
 {% block style %} <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
 
 {% block content %}
-    <div class="bg-white p-8 rounded-lg shadow-md w-full h-full flex flex-col justify-center items-center">
+    <div class="bg-white p-8 rounded-lg -md w-full h-full flex flex-col justify-center items-center">
     
     <main id="recipeForm" class="w-full max-w-6xl">
         <p class="text-gray-400 mb-6 text-lg text-center text-sm-7">Selecione, gere e cozinhe receitas feitas especialmente para você</p>
@@ -21,13 +21,13 @@
         
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
-                <label class="block text-lg font-semibold">Tempo de cozimento (<span id="cookTimeValue">10</span> min)</label>
+                <label class="block text-lg font-semibold">Tempo de cozimento (<span id="cookTimeValue">65</span> min)</label>
                 <input type="range" min="10" max="120" name="tempo" id="cookTime"  oninput="updateCookTime()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
                 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
             </div>
             <div>
-                <label class="block text-lg font-semibold">Porções (<span id="porcaoqntdvalue">1</span>)</label>
+                <label class="block text-lg font-semibold">Porções (<span id="porcaoqntdvalue">10</span>)</label>
                 <input type="range" min="1" max="20" name="porcoes" id="porcaoqntd" oninput="updatePorcaoQntd()" class="w-full h-1 bg-gray-300 rounded-md appearance-none cursor-pointer 
                 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 
                 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none">
@@ -64,8 +64,7 @@
         
         
         <div class="flex justify-center mt-6">
-            <button type="submit" id="generate" onclick="generateRecipe()" 
-                class="bg-orange-600 text-white px-6 py-3 rounded-2xl font-semibold text-xl shadow-md 
+            <button type="submit" id="generate" class="bg-orange-600 text-white px-6 py-3 rounded-2xl font-semibold text-xl
                        hover:bg-orange-500 transition w-full max-w-xs">
                 Gerar Receita
             </button>
@@ -74,12 +73,17 @@
     </div>
     </main>
 
-    <section id="recipeResult" class="hidden w-full max-w-6xl mt-8">
+    <section id="recipeResult" class="hidden w-full max-w-6xl mt-8 relative">
+        <button onclick="backToForm()" class="absolute left-0 ml-4 bg-white-500 text-black px-0 py-2 font-bold">
+            <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" class="w-6 h-6">
+        </button>
         <p class="text-gray-500 text-center">Prontinho! Aproveite sua nova deliciosa receita :)</p>
-        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-gray-300">
+        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-black">
             <div class="flex justify-between items-start">
                 <h2 id="recipeTitle" class="text-2xl font-bold">Título da Receita</h2>
-                <button id="favoriteBtn" class="text-gray-400 text-2xl">&#9829;</button>
+                <button id="favoriteBtn" class="text-gray-400 text-2xl">
+                    <img src="{{ url_for('static', filename='assets/favorite.svg') }}" class=" w-6 h-6">
+                </button>
             </div>
             
             <div class="flex justify-around text-gray-600 mt-2">
@@ -99,9 +103,11 @@
 
             <div class="mt-6">
                 <h3 class="text-xl font-semibold mb-3">Ingredientes</h3>
-                <ul id="ingredientsList" class="list-disc pl-5">
+                
+                <ul id="ingredientsList" class="list-disc pl-5 grid grid-cols-2">
                     <!-- Lista de ingredientes será inserida aqui -->
                 </ul>
+            
             </div>
 
             <div class="mt-6">
@@ -113,12 +119,14 @@
         </div>
 
         <div class="flex justify-center mt-6 space-x-4">
-                <button class="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-orange-500 transition">Gerar nova receita</button>
-                <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-green-500 transition">Gerar lista de compras</button> 
+            <button type="submit" id="generateNew" class="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-orange-500 transition">
+                Gerar nova receita
+            </button>
+            <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-green-500 transition">
+                Gerar lista de compras
+            </button> 
         </div>
-        <button onclick="backToForm()" class="mt-6 bg-white-500 text-black px-9 py-10 rounded font-semibold text-xl ml-4">
-            &#8592;
-        </button>        
+
     </div>
     </section>
 {% endblock %}

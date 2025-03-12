@@ -2,20 +2,19 @@ const body = document.getElementById('body');
 const submit_btn = document.getElementById('generate');
 const input = document.getElementById('input');
 
-submit_btn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    
-    const data = {
-        ingredientes: document.querySelector('input[name="ingredientes"]').value,
-        culinaria: document.querySelector('input[name="culinaria"]').value,
-        porcoes: document.querySelector('input[name="porcoes"]').value,
-        refeicao: document.querySelector('select[name="refeicao"]').value,
-        apenas_ingredientes: document.querySelector('input[name="apenas-ingredientes"]').checked,
-        tempo: document.querySelector('input[name="tempo"]').value,
-        nao_informa_refeicao: document.querySelector('input[name="nao-informa-refeicao"]').checked,
-        nao_informa_culinaria: document.querySelector('input[name="nao-informa-culinaria"]').checked
-    };
-    
+async function generate_and_display() {
+    try {
+        const data = {
+            ingredientes: document.querySelector('input[name="ingredientes"]').value,
+            culinaria: document.querySelector('input[name="culinaria"]').value,
+            porcoes: document.querySelector('input[name="porcoes"]').value,
+            refeicao: document.querySelector('select[name="refeicao"]').value,
+            apenas_ingredientes: document.querySelector('input[name="apenas-ingredientes"]').checked,
+            tempo: document.querySelector('input[name="tempo"]').value,
+            nao_informa_refeicao: document.querySelector('input[name="nao-informa-refeicao"]').checked,
+            nao_informa_culinaria: document.querySelector('input[name="nao-informa-culinaria"]').checked
+        };
+        
         const response = await fetch("/nova-receita/resposta", {
             method: "POST",
             headers: {
@@ -40,7 +39,7 @@ submit_btn.addEventListener("click", async (e) => {
         const ingredientsList = document.getElementById("ingredientsList");
         if (ingredientsList) {
             ingredientsList.innerHTML = recipeData.ingredientes
-                .map(ing => `<li>${ing.quantidade} ${ing.nome}</li>`)
+                .map(ing => `<li>${ing.quantidade} de ${ing.nome}</li>`)
                 .join('');
         }
         
@@ -55,19 +54,21 @@ submit_btn.addEventListener("click", async (e) => {
         // Mostra a seção de resultado
         document.getElementById("recipeForm").classList.add("hidden");
         document.getElementById("recipeResult").classList.remove("hidden");
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao gerar a receita. Por favor, tente novamente.');
+    }
+}
+
+document.getElementById('generate').addEventListener("click", (e) => {
+    e.preventDefault();
+    generate_and_display();
 });
 
-// Preenchendo os dados na tela
-document.getElementById("recipeTitle").innerText = recipeData.title;
-document.getElementById("difficulty").innerText = recipeData.difficulty;
-document.getElementById("prepTime").innerText = recipeData.prepTime;
-document.getElementById("mealType").innerText = recipeData.mealType;
-
-// Ingredientes
-document.getElementById("ingredientsList").innerHTML = recipeData.ingredients.map(ing => `<li>${ing}</li>`).join('');
-
-// Passos
-document.getElementById("recipeSteps").innerHTML = recipeData.steps.map(step => `<li>${step}</li>`).join('');
+document.getElementById('generateNew').addEventListener('click', (e) => {
+    e.preventDefault();
+    generate_and_display();
+});
 
 // Funcionalidade do botão de favoritar
 const favoriteBtn = document.getElementById("favoriteBtn");
@@ -82,11 +83,6 @@ function updateCookTime() {
 
 function updatePorcaoQntd() {
     document.getElementById("porcaoqntdvalue").innerText = document.getElementById("porcaoqntd").value;
-}
-
-function generateRecipe() {
-    document.getElementById("recipeForm").classList.add("hidden");
-    document.getElementById("recipeResult").classList.remove("hidden");
 }
 
 function backToForm() {
