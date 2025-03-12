@@ -1,5 +1,5 @@
 const body = document.getElementById('body');
-const submit_btn = document.querySelector('button');
+const submit_btn = document.getElementById('generate');
 const input = document.getElementById('input');
 
 submit_btn.addEventListener("click", async (e) => {
@@ -8,34 +8,54 @@ submit_btn.addEventListener("click", async (e) => {
     const data = {
         ingredientes: document.querySelector('input[name="ingredientes"]').value,
         culinaria: document.querySelector('input[name="culinaria"]').value,
-        porcoes: document.querySelector('select[name="porcoes"]').value,
+        porcoes: document.querySelector('input[name="porcoes"]').value,
         refeicao: document.querySelector('select[name="refeicao"]').value,
         apenas_ingredientes: document.querySelector('input[name="apenas-ingredientes"]').checked,
-        tempo: document.querySelector('input[name="tempo"]'),
+        tempo: document.querySelector('input[name="tempo"]').value,
         nao_informa_refeicao: document.querySelector('input[name="nao-informa-refeicao"]').checked,
-        nao_informa_culinaria: document.querySelector('input[name="nao-informa-culinaria"]')
+        nao_informa_culinaria: document.querySelector('input[name="nao-informa-culinaria"]').checked
     };
     
-    const response = await fetch("./resposta", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    });
-    
-    const reader = response.body.getReader();
-    let output = "";
-    
-    while (true) {
-        const { done, value } = await reader.read();
-        output += new TextDecoder().decode(value);
-        body.innerHTML = marked.parse(output);
-        
-        if (done) {
-            return;
-        }
-    }
+        const response = await fetch("/nova-receita/resposta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        });
 
-})
+        if (!response.ok) {
+            throw new Error('Erro ao gerar receita');
+        }
+
+        const recipeData = await response.json();
+        
+        // Atualiza a interface com os dados da receita
+        document.getElementById("recipeTitle").innerText = recipeData.titulo;
+        document.getElementById("difficulty").innerText = recipeData.dificuldade;
+        document.getElementById("prepTime").innerText = recipeData.tempo_de_preparo;
+        document.getElementById("mealType").innerText = recipeData.tipo_de_refeicao;
+        
+        // Lista de ingredientes
+        const ingredientsList = document.getElementById("ingredientsList");
+        if (ingredientsList) {
+            ingredientsList.innerHTML = recipeData.ingredientes
+                .map(ing => `<li>${ing.quantidade} ${ing.nome}</li>`)
+                .join('');
+        }
+        
+        // Lista de passos
+        const recipeSteps = document.getElementById("recipeSteps");
+        if (recipeSteps) {
+            recipeSteps.innerHTML = recipeData.passos
+                .map((step, index) => `<li>${index + 1}. ${step}</li>`)
+                .join('');
+        }
+
+        // Mostra a seção de resultado
+        document.getElementById("recipeForm").classList.add("hidden");
+        document.getElementById("recipeResult").classList.remove("hidden");
+});
 
 // Preenchendo os dados na tela
 document.getElementById("recipeTitle").innerText = recipeData.title;

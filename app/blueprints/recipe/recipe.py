@@ -1,6 +1,9 @@
-from flask import render_template, url_for, request
+from flask import render_template, request, jsonify
 from app.blueprints.recipe import recipe_bp
+from flask_login import current_user
 import openai
+import json
+import re
 
 
 # rota para a parte de geração de receitas
@@ -10,60 +13,56 @@ def new_recipe():
 
 
 # resposta para a receita 
-@recipe_bp.route('/resposta', methods=['POST', 'GET'])    
-def answer():
-    # Função que gera a mensagem (prompt) que será enviada à API da OpenAI
-    def generate_message(context:dict[str | None | bool]) -> str:
-        '''Recebe o contexto como um dicionário e forma o prompt que sera mandado para a API da OpenAI'''
-
-        message = f'Sem introduções e explicações sobre, me dê uma receita que sirva {context["porcoes"]} pessoa(as)'
+@recipe_bp.route('/resposta', methods=['POST'])
+def response():
+    def generate_message(context):
+        message = f'''Me forneça uma receita em formato JSON, apenas isso, sem nenhum comentário ou frase, com os seguintes campos: 
+        'titulo', 'dificuldade', 'tempo_de_preparo', 'tipo_de_refeicao', 'ingredientes' (lista de objetos com 'nome' e 'quantidade'), 
+        e 'passos' (lista de instruções numeradas).
+        Ela deve servir {context["porcoes"]} pessoa(s)'''
         
-        if context['refeicao']:
-            message += f' para {context['refeicao']}'
+        if not context['nao_informa_refeicao'] and context['refeicao']:
+            message += f', será uma receita para {context["refeicao"]}'
 
-        if context['culinaria']:
-            message += f', ela deve ser da culinaria {context['culinaria']}'
-
-        if context['restricoes']:
-            message += f', a receita NÃO pode conter {context['restricoes']}'
+        if not context['nao_informa_culinaria'] and context['culinaria']:
+            message += f', ela deve ser da culinaria {context["culinaria"]}'
 
         if context['ingredientes']:
-            apenas = 'use apenas esses ingredientes e nenhum outro' if context['apenas_ingredientes'] else 'se necessário pode usar outros ingredientes'
+            apenas = 'use apenas esses ingredientes e nenhum outro, ' if context['apenas_ingredientes'] else 'se necessário pode usar outros ingredientes, '
             message += f', ela deve usar os seguintes ingredientes: {context["ingredientes"]}, {apenas}'
 
-        if context['eletrodomesticos']:
-            message += f', se necessário, de preferência use apenas os seguintes eletrodomésticos: {context['eletrodomesticos']}'
+        if current_user.is_authenticated:
+            restrictions = current_user.preferences['dietary_restrictions']
+            skill_level = current_user.preferences['skill_level']
+            
+            if restrictions:
+                restrictions_str = ', '.join(restrictions)
+                message += f', a receita NÃO pode conter {restrictions_str}'
+            
+            message += f', a receita deve ser para alguém de nível {skill_level}'
 
+        message += f', o tempo de preparo deve ser de aproximadamente {context["tempo"]} minutos'
+        
         return message
 
     if request.method == "POST":
-        data = request.json # recebe os dados do front
-        context = {
-            'ingredientes':        data.get('ingredientes'),
-            'eletrodomesticos':    data.get('eletrodomesticos'),
-            'restricoes':          data.get('restricoes'),
-            'culinaria':           data.get('culinaria'),
-            'porcoes':             data.get('porcoes'),
-            'refeicao':            data.get('refeicao'),
-            'apenas_ingredientes': data.get('apenas_ingredientes')
-        }
-        
+            data = request.get_json()
+            message = generate_message(data)
+            
+            import dotenv, os
+            dotenv.load_dotenv(dotenv.find_dotenv())
+            client = openai.OpenAI(api_key=os.getenv("API_KEY"))
 
-    # Função para gerar a resposta usando a API da OpenAI
-    def generate(message:str):
-        import dotenv, os
-        dotenv.load_dotenv(dotenv.find_dotenv())
-        openai.api_key = os.getenv("API_KEY")
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": message}],
+                temperature=0.7,
+            )
+            # para acessar a resposta corretamente na API
+            response_content = response.choices[0].message.content
+            # tirar "```json" do markdown para transformar em json
+            cleaned_content = re.sub(r"^```json|```$", "", response_content).strip()
 
-        stream = openai.chat.completions.create(
-            model="gpt-4o-mini", # talvez mudar o modelo para um mais preciso antes do 'deploy' seja interessante
-            messages=[{"role": "user", "content": message}],
-            stream=True,
-            max_tokens=50 # poucos tokens apenas para testes, normalmente 400 - 500 é suficente
-        ) 
+            recipe_data = json.loads(cleaned_content) if cleaned_content else {}
 
-        for chunk in stream: # stream da resposta
-            if chunk.choices[0].delta.content is not None:
-                yield(chunk.choices[0].delta.content)
-
-    return generate(generate_message(context=context)), {"Content-Type": "text/plain"}
+            return jsonify(recipe_data)
