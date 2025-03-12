@@ -1,7 +1,6 @@
 import dotenv, os
 from flask import Flask
 from app.extensions import mongo, login_manager
-from flask_login import LoginManager
 
 
 def create_app() -> Flask:

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import render_template
 from app.blueprints.menu import menu_bp
 # from flask_login import login_required, current_user
 # from app.models.users import User

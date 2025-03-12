@@ -24,15 +24,15 @@ class Recipe:
         return recipe_data
 
     @staticmethod
-    def find_by_user(user_id:int) -> Recipe:
+    def find_by_user(user_id:int):
         return list(Recipe.collection.find({"user_id": user_id}).sort("create_date", 1))
 
     @staticmethod
-    def find_by_title(title:str) -> Recipe:
+    def find_by_title(title:str):
         return list(Recipe.collection.find({"title": {"$regex": f"^{title}$", "$options": "i"}}))
 
     @staticmethod
-    def find_by_tag(tag) -> Recipe:
+    def find_by_tag(tag):
         return list(Recipe.collection.find({"tags": tag}))
 
     @staticmethod
