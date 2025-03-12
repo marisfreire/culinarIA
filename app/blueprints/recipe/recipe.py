@@ -12,41 +12,61 @@ def new_recipe():
     return render_template("nova-receita/nova-receita.html")
 
 
+# gera o prompt
+def generate_message(context):
+    message = f'''Me forneça uma receita em formato JSON, apenas isso, sem nenhum comentário ou frase, com os seguintes campos: 
+    'titulo', 'dificuldade', 'tempo_de_preparo', 'tipo_de_refeicao', 'ingredientes' (lista de objetos com 'nome' e 'quantidade'), 
+    e 'passos' (lista de instruções numeradas).
+    Ela deve servir {context["porcoes"]} pessoa(s)'''
+    
+    if not context['nao_informa_refeicao'] and context['refeicao']:
+        message += f', será uma receita para {context["refeicao"]}'
+
+    if not context['nao_informa_culinaria'] and context['culinaria']:
+        message += f', ela deve ser da culinaria {context["culinaria"]}'
+
+    if context['ingredientes']:
+        apenas = 'use apenas esses ingredientes e nenhum outro, ' if context['apenas_ingredientes'] else 'se necessário pode usar outros ingredientes, '
+        message += f', ela deve usar os seguintes ingredientes: {context["ingredientes"]}, {apenas}'
+
+    if current_user.is_authenticated:
+        restrictions = current_user.preferences['dietary_restrictions']
+        skill_level = current_user.preferences['skill_level']
+        
+        if restrictions:
+            restrictions_str = ', '.join(restrictions)
+            message += f', a receita NÃO pode conter {restrictions_str}'
+        
+        message += f', a receita deve ser para alguém de nível {skill_level}'
+
+    message += f', o tempo de preparo deve ser de aproximadamente {context["tempo"]} minutos'
+    
+    return message
+
+
 # resposta para a receita 
 @recipe_bp.route('/resposta', methods=['POST'])
 def response():
-    def generate_message(context):
-        message = f'''Me forneça uma receita em formato JSON, apenas isso, sem nenhum comentário ou frase, com os seguintes campos: 
-        'titulo', 'dificuldade', 'tempo_de_preparo', 'tipo_de_refeicao', 'ingredientes' (lista de objetos com 'nome' e 'quantidade'), 
-        e 'passos' (lista de instruções numeradas).
-        Ela deve servir {context["porcoes"]} pessoa(s)'''
-        
-        if not context['nao_informa_refeicao'] and context['refeicao']:
-            message += f', será uma receita para {context["refeicao"]}'
-
-        if not context['nao_informa_culinaria'] and context['culinaria']:
-            message += f', ela deve ser da culinaria {context["culinaria"]}'
-
-        if context['ingredientes']:
-            apenas = 'use apenas esses ingredientes e nenhum outro, ' if context['apenas_ingredientes'] else 'se necessário pode usar outros ingredientes, '
-            message += f', ela deve usar os seguintes ingredientes: {context["ingredientes"]}, {apenas}'
-
-        if current_user.is_authenticated:
-            restrictions = current_user.preferences['dietary_restrictions']
-            skill_level = current_user.preferences['skill_level']
-            
-            if restrictions:
-                restrictions_str = ', '.join(restrictions)
-                message += f', a receita NÃO pode conter {restrictions_str}'
-            
-            message += f', a receita deve ser para alguém de nível {skill_level}'
-
-        message += f', o tempo de preparo deve ser de aproximadamente {context["tempo"]} minutos'
-        
-        return message
-
     if request.method == "POST":
-            data = request.get_json()
+        try:
+            # Primeiro, tenta fazer o parse do JSON
+            if not request.is_json:
+                return jsonify({"error": "Requisição deve ser JSON"}), 400
+            
+            try:
+                data = request.get_json()
+            except Exception:
+                return jsonify({"error": "JSON inválido"}), 400
+
+            if data is None:
+                return jsonify({"error": "JSON inválido"}), 400
+            
+            # Validar campos obrigatórios
+            required_fields = ['porcoes', 'tempo', 'ingredientes']
+            for field in required_fields:
+                if field not in data:
+                    return jsonify({"error": f"Campo obrigatório ausente: {field}"}), 400
+            
             message = generate_message(data)
             
             import dotenv, os
@@ -58,11 +78,22 @@ def response():
                 messages=[{"role": "user", "content": message}],
                 temperature=0.7,
             )
-            # para acessar a resposta corretamente na API
+            
             response_content = response.choices[0].message.content
-            # tirar "```json" do markdown para transformar em json
             cleaned_content = re.sub(r"^```json|```$", "", response_content).strip()
-
-            recipe_data = json.loads(cleaned_content) if cleaned_content else {}
+            
+            try:
+                recipe_data = json.loads(cleaned_content) if cleaned_content else {}
+            except json.JSONDecodeError:
+                return jsonify({"error": "Erro ao processar resposta da API"}), 500
 
             return jsonify(recipe_data)
+            
+        except json.JSONDecodeError:
+            return jsonify({"error": "JSON inválido"}), 400
+        except KeyError as e:
+            return jsonify({"error": f"Campo obrigatório ausente: {str(e)}"}), 400
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    return jsonify({"error": "Método não permitido"}), 405
