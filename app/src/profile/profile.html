@@ -15,13 +15,13 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label for="nome" class="font-medium block mb-1">Nome</label>
-                    <input type="text" id="nome" placeholder="Nome do usuário"
-                        class="border p-2 rounded w-full mb-4 bg-gray-300" disabled>
+                    <input type="text" id="nome" placeholder="{{ current_user.name }}"
+                        class="border p-2 rounded w-full mb-4 bg-gray-300 placeholder-black" disabled>
                 </div>
                 <div>
                     <label for="email" class="font-medium block mb-1">E-mail</label>
-                    <input type="email" id="email" placeholder="email@usuario.com" disabled
-                        class="border p-2 rounded w-full bg-gray-300">
+                    <input type="email" id="email" placeholder="{{ current_user.email }}" disabled
+                        class="border p-2 rounded w-full bg-gray-300 placeholder-black">
                 </div>
             </div>
 
@@ -29,13 +29,13 @@
             <div class="grid grid-cols-2 gap-4 mt-4">
                 <div>
                     <label for="restricoes" class="font-medium block mb-1">Restrições Alimentares</label>
-                    <textarea id="restricoes" placeholder="Listam-se aqui as restrições alimentares" disabled
-                        class="border p-2 rounded w-full bg-gray-300"></textarea>
+                <textarea id="restricoes" placeholder="{{ ', '.join(current_user.preferences['dietary_restrictions']) }}" disabled
+                        class="border p-2 rounded w-full bg-gray-300 placeholder-black"></textarea>
                 </div>
                 <div>
                     <label for="nivel" class="font-medium block mb-1">Nível Culinário</label>
-                    <input type="text" id="nivel" placeholder="Nível de expertise culinária" disabled
-                        class="border p-2 rounded w-full bg-gray-300">
+                    <input type="text" id="nivel" placeholder="{{ current_user.preferences['skill_level'] }}" disabled
+                        class="border p-2 rounded w-full bg-gray-300 placeholder-black">
                     <div class="flex flex-col space-y-2 mt-4">
                         <button
                             class="bg-green-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-green-600 transition">Alterar
