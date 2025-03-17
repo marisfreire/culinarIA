@@ -60,3 +60,17 @@ class Recipe:
     @staticmethod
     def delete_recipe(recipe_id:int):
         Recipe.collection.delete_one({"recipe_id": recipe_id})
+
+    def to_dict(self):
+        """Converte o objeto Recipe em um dicionário serializável"""
+        return {
+            'recipe_id': self.recipe_id,
+            'title': self.title,
+            'ingredients': self.ingredients,
+            'instructions': self.instructions,
+            'difficulty': self.difficulty,
+            'time': self.time,
+            'meal_type': self.meal_type,
+            'created_at': str(self.created_at) if self.created_at else None,
+            'created_by': self.created_by
+        }
