@@ -11,6 +11,8 @@ class User(UserMixin):
             self.id = user_data['user_id']
             self.email = user_data['email']
             self.name = user_data['name']
+            self.favorites_recipes_id = user_data.get('favorites_recipes_id', [])
+            self.recipes_favorited = user_data.get('recipes_favorited', 0)
             self.preferences = user_data.get('preferences', {
                 'dietary_restrictions': [],
                 'skill_level': 'iniciante'
@@ -19,6 +21,8 @@ class User(UserMixin):
             self.id = None
             self.email = None
             self.name = None
+            self.favorites_recipes_id = []
+            self.recipes_favorited = 0
             self.preferences = {
                 'dietary_restrictions': [],
                 'skill_level': 'iniciante'
@@ -58,8 +62,8 @@ class User(UserMixin):
                 "dietary_restrictions": dietary_restrictions, # ex: gluten free, vegano, intolerante a lactose
                 "skill_level": skill_level # iniciante, intermediário, avançado 
             },
-            "recipes_created": 0,
-            "recipes_favorited": 0
+            "recipes_favorited": 0,
+            "favorites_recipes_id": []
         }
         User.collection.insert_one(user_data)
         return user_data
@@ -71,13 +75,6 @@ class User(UserMixin):
     @staticmethod
     def check_password(user:str, password:str):
         return check_password_hash(user["password_hash"], password)
-
-    @staticmethod
-    def increment_recipes_created(user_id:int):
-        User.collection.update_one(
-            {"user_id": user_id},
-            {"$inc": {"recipes_created": 1}}
-        )
 
     @staticmethod
     def increment_recipes_favorited(user_id:int):
@@ -92,3 +89,30 @@ class User(UserMixin):
             {"user_id": user_id, "recipes_favorited": {"$gt": 0}},
             {"$inc": {"recipes_favorited": -1}}
         )
+
+    def add_favorite_recipe(self, recipe_id:int):
+        if recipe_id not in self.favorites_recipes_id:
+            User.collection.update_one(
+                {"user_id": self.id},
+                {"$addToSet": {"favorites_recipes_id": recipe_id}}
+            )
+            self.favorites_recipes_id.append(recipe_id)
+            self.increment_recipes_favorited(self.id)
+
+    def remove_favorite_recipe(self, recipe_id:int):
+        if recipe_id in self.favorites_recipes_id:
+            User.collection.update_one(
+                {"user_id": self.id},
+                {"$pull": {"favorites_recipes_id": recipe_id}}
+            )
+            self.favorites_recipes_id.remove(recipe_id)
+            self.decrement_recipes_favorited(self.id)
+
+    def get_favorite_recipes(self) -> list:
+        from app.models import Recipe
+        favorite_recipes = []
+        for recipe_id in self.favorites_recipes_id:
+            recipe = Recipe.find_by_id(recipe_id)
+            if recipe:
+                favorite_recipes.append(recipe)
+        return favorite_recipes
