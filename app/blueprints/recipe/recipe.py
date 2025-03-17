@@ -4,6 +4,8 @@ from flask_login import current_user
 import openai
 import json
 import re
+from flask_login import login_required
+from app.models import Recipe
 
 
 # rota para a parte de geração de receitas
@@ -84,11 +86,23 @@ def response():
             
             try:
                 recipe_data = json.loads(cleaned_content) if cleaned_content else {}
+                recipe_id = Recipe.get_next_recipe_id()
+                recipe_data['recipe_id'] = recipe_id
+                
+                # criar a receita no banco
+                Recipe.create_recipe(
+                    title=recipe_data['titulo'],
+                    ingredients=recipe_data['ingredientes'],
+                    instructions=recipe_data['passos'],
+                    difficulty=recipe_data['dificuldade'],
+                    time=recipe_data['tempo_de_preparo'],
+                    meal_type=recipe_data['tipo_de_refeicao']
+                )
+                
+                return jsonify(recipe_data)
             except json.JSONDecodeError:
                 return jsonify({"error": "Erro ao processar resposta da API"}), 500
 
-            return jsonify(recipe_data)
-            
         except json.JSONDecodeError:
             return jsonify({"error": "JSON inválido"}), 400
         except KeyError as e:
@@ -97,3 +111,29 @@ def response():
             return jsonify({"error": str(e)}), 500
 
     return jsonify({"error": "Método não permitido"}), 405
+
+
+@recipe_bp.route('/favorito/<int:recipe_id>', methods=['POST'])
+@login_required
+def toggle_favorite(recipe_id):
+    try:
+        recipe = Recipe.find_by_id(recipe_id)
+        if not recipe:
+            return jsonify({"error": "Receita não encontrada"}), 404
+        
+        if hasattr(current_user, 'favorites_recipes_id') and current_user.favorites_recipes_id is not None:
+            is_favorite = recipe_id in current_user.favorites_recipes_id
+        else:
+            is_favorite = False
+            
+        if is_favorite:
+            current_user.remove_favorite_recipe(recipe_id)
+        else:
+            current_user.add_favorite_recipe(recipe_id)
+            
+        return jsonify({
+            "status": "success",
+            "is_favorite": not is_favorite
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

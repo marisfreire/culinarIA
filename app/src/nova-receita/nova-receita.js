@@ -33,7 +33,13 @@ async function generate_and_display() {
         document.getElementById("recipeTitle").innerText = recipeData.titulo;
         document.getElementById("difficulty").innerText = recipeData.dificuldade;
         document.getElementById("prepTime").innerText = recipeData.tempo_de_preparo;
-        document.getElementById("mealType").innerText = recipeData.tipo_de_refeicao;
+        document.getElementById("MealType").innerText = recipeData.tipo_de_refeicao;
+        
+        // Atualiza o botão de favorito com o ID da receita
+        const favoriteBtn = document.getElementById("favoriteBtn");
+        if (favoriteBtn && recipeData.recipe_id) {
+            favoriteBtn.setAttribute('data-recipe-id', recipeData.recipe_id);
+        }
         
         // Lista de ingredientes
         const ingredientsList = document.getElementById("ingredientsList");
@@ -60,6 +66,23 @@ async function generate_and_display() {
     }
 }
 
+// Event listener para o botão de favorito
+document.addEventListener('DOMContentLoaded', () => {
+    const favoriteBtn = document.getElementById("favoriteBtn");
+    if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', () => {
+            const recipeId = favoriteBtn.getAttribute('data-recipe-id');
+            if (recipeId) {
+                toggleFavorite(recipeId);
+            } else {
+                console.error('Receita não encontrada');
+                alert('Por favor, gere uma receita primeiro');
+            }
+        });
+    }
+});
+
+// Event listeners para os botões de gerar receita
 document.getElementById('generate').addEventListener("click", (e) => {
     e.preventDefault();
     generate_and_display();
@@ -70,12 +93,39 @@ document.getElementById('generateNew').addEventListener('click', (e) => {
     generate_and_display();
 });
 
-// Funcionalidade do botão de favoritar
-const favoriteBtn = document.getElementById("favoriteBtn");
-favoriteBtn.addEventListener("click", () => {
-    recipeData.isFavorite = !recipeData.isFavorite;
-    favoriteBtn.style.color = recipeData.isFavorite ? "orange" : "gray";
-});
+async function toggleFavorite(recipeId) {
+    try {
+        if (!recipeId) {
+            console.error('Recipe ID não encontrado');
+            return;
+        }
+
+        const response = await fetch(`/nova-receita/favorito/${recipeId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const favoriteBtn = document.getElementById("favoriteBtn");
+        
+        if (data.is_favorite) {
+            favoriteBtn.classList.add("text-orange-500");
+            favoriteBtn.classList.remove("text-gray-400");
+        } else {
+            favoriteBtn.classList.remove("text-orange-500");
+            favoriteBtn.classList.add("text-gray-400");
+        }
+    } catch (error) {
+        console.error('Erro ao favoritar:', error);
+        alert('Erro ao favoritar receita: ' + error.message);
+    }
+}
 
 function updateCookTime() {
     document.getElementById("cookTimeValue").innerText = document.getElementById("cookTime").value;
