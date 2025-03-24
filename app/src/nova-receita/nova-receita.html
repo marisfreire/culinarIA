@@ -72,7 +72,10 @@
         
     </div>
     </main>
-
+    <section id="loading" class="hidden w-full max-w-6xl mt-8 relative flex justify-center flex-col">
+        <div class="loader"></div>
+        <p class="text-gray-400 text-center animacao" id ="loader-text"></p>
+    </section>
     <section id="recipeResult" class="hidden w-full max-w-6xl mt-8 relative">
         <button onclick="backToForm()" class="absolute left-0 ml-4 bg-white-500 text-black px-0 py-2 font-bold">
             <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" class="w-6 h-6">
@@ -140,4 +143,5 @@
     </section>
 {% endblock %}
 
-{% block script %} <script  src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}" ></script> {% endblock %}
+{% block script %} <script  src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}" ></script> 
+{% endblock %}
