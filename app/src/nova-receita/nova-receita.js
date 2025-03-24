@@ -29,6 +29,7 @@ async function generate_and_display() {
 
         const recipeData = await response.json();
         
+
         // Atualiza a interface com os dados da receita
         document.getElementById("recipeTitle").innerText = recipeData.titulo;
         document.getElementById("difficulty").innerText = recipeData.dificuldade;
@@ -58,12 +59,35 @@ async function generate_and_display() {
         }
 
         // Mostra a seção de resultado
-        document.getElementById("recipeForm").classList.add("hidden");
+        document.getElementById("loading").classList.add("hidden");
         document.getElementById("recipeResult").classList.remove("hidden");
+        
     } catch (error) {
         console.error('Erro:', error);
         alert('Erro ao gerar a receita. Por favor, tente novamente.');
     }
+}
+
+function loading_screen(){
+    document.getElementById("recipeForm").classList.add("hidden");
+
+    text = [
+        "Preparando uma receita maravilhosa...",
+        "Buscando as melhoras receitas...",
+        "Sua receita já está quase pronta!",
+    ]
+
+    const elementText = document.querySelector("#loader-text");
+    num = Math.floor(Math.random() * text.length);
+    elementText.innerText = text[num]; 
+    
+    setInterval(function() {
+        num = Math.floor(Math.random() * text.length);
+        elementText.innerText = text[num]; // Pegar textos diferentes
+    }, 4500)
+    
+    
+    document.getElementById("loading").classList.remove("hidden");
 }
 
 // Event listener para o botão de favorito
@@ -85,11 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // Event listeners para os botões de gerar receita
 document.getElementById('generate').addEventListener("click", (e) => {
     e.preventDefault();
+    loading_screen();
     generate_and_display();
 });
 
 document.getElementById('generateNew').addEventListener('click', (e) => {
     e.preventDefault();
+    loading_screen();
     generate_and_display();
 });
 
