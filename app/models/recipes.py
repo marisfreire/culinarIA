@@ -12,6 +12,7 @@ class Recipe:
             self.instructions = recipe_data.get('instructions', [])
             self.difficulty = recipe_data.get('difficulty')
             self.time = recipe_data.get('time')
+            self.tags = recipe_data.get('tags')
             self.meal_type = recipe_data.get('meal_type')
             self.created_at = recipe_data.get('create_date')
             self.created_by = recipe_data.get('created_by')
@@ -22,6 +23,7 @@ class Recipe:
             self.instructions = []
             self.difficulty = None
             self.time = None
+            self.tags = []
             self.meal_type = None
             self.created_at = None
 
@@ -31,6 +33,7 @@ class Recipe:
                      instructions:list, 
                      difficulty:str,
                      time:str,
+                     tags:list,
                      meal_type:str,
                      ) -> dict:
 
@@ -40,6 +43,7 @@ class Recipe:
             "instructions": instructions,
             "difficulty":   difficulty,
             "time":         time,
+            "tags":         tags,
             "meal_type":    meal_type,
             "create_date":  datetime.utcnow(),
             "recipe_id":    Recipe.get_next_recipe_id(),
@@ -70,6 +74,7 @@ class Recipe:
             'instructions': self.instructions,
             'difficulty': self.difficulty,
             'time': self.time,
+            'tags': self.tags,
             'meal_type': self.meal_type,
             'created_at': str(self.created_at) if self.created_at else None,
             'created_by': self.created_by

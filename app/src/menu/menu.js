@@ -6,7 +6,20 @@ function openModal(recipe) {
     document.getElementById('modalTime').textContent = recipe.time;
     document.getElementById('modalMealType').textContent = recipe.meal_type;
     
-    // ingredientes
+    // Preenche as tags
+    const tagsContainer = document.getElementById('modalTags');
+    if (recipe.tags ) {
+        tagsContainer.innerHTML = recipe.tags
+            .map(tag => `
+                <span class="bg-[#00BF63] font-semibold text-white px-3 py-1 rounded-full text-s inline-block">
+                        ${tag}
+                    </span>
+            `).join('');
+    } else {
+        tagsContainer.innerHTML = '';
+    }
+    
+    // Preenche ingredientes
     const ingredientsList = document.getElementById('modalIngredients');
     ingredientsList.innerHTML = recipe.ingredients
         .map(ing => `<li>${ing.quantidade} de ${ing.nome}</li>`)
@@ -18,6 +31,7 @@ function openModal(recipe) {
         .map(step => `<li>${step}</li>`)
         .join('');
     
+    // Mostra o modal
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
 }

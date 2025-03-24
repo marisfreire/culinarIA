@@ -20,7 +20,7 @@
 
         <div class="flex justify-center mb-10">
             <button 
-                onclick="window.location.href='{{ url_for('recipe.new_recipe') }}'"
+                onclick=window.location.href="{{ url_for('recipe.new_recipe') }}"
                 class="bg-orange-600 text-white px-6 py-4 rounded-2xl text-2xl hover:bg-orange-500 transition">
                 <strong>Gerar uma nova receita!</strong>
             </button>
@@ -47,21 +47,25 @@
 
                     <div class="border-2 mb-3 border-[#D9D9D9]"></div>
                     
-                    <div class="space-y-2">
-                        <div class="flex flex-wrap gap-2">
-                            <div class="bg-[#D9D9D9] rounded-full text-[#3A3B3C] py-1 px-3 inline-flex items-center">
-                                <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="Tempo" class="w-4 h-4 mr-1">
-                                <strong>{{ recipe.time }}</strong>
-                            </div>
-                            <div class="bg-[#D9D9D9] rounded-full text-[#3A3B3C] py-1 px-3 inline-flex items-center">
-                                <img src="{{ url_for('static', filename='assets/barrinhas.png') }}" alt="Dificuldade" class="w-4 h-4 mr-1">
-                                <strong>{{ recipe.difficulty }}</strong>
-                            </div>
+                    <!-- Tags como pílulas -->
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        {% if recipe.tags %}
+                            {% for tag in recipe.tags %}
+                                <span class="bg-[#D9D9D9] rounded-full text-[#3A3B3C] py-1 px-3 inline-flex items-center">
+                                    <strong>{{ tag }}</strong>
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class=" flex flex-col text-xl text-[#1E1E1E]">
+                        <div class="py-1 px-2 inline-flex items-center">
+                            <img src="{{ url_for('static', filename='assets/clock.png') }}" alt="Tempo" class="w-5 h-5 mr-1 brightness-0">
+                            <strong>{{ recipe.time }}</strong>
                         </div>
-                        
-                        <div class="bg-[#D9D9D9] rounded-full text-[#3A3B3C] py-1 px-3 inline-flex items-center">
-                            <img src="{{ url_for('static', filename='assets/vector.png') }}" alt="Refeição" class="w-4 h-4 mr-1">
-                            <strong>{{ recipe.meal_type }}</strong>
+                        <div class="py-1 px-2 inline-flex items-center">
+                            <img src="{{ url_for('static', filename='assets/barrinhas.png') }}" alt="Dificuldade" class="w-5 h-5 mr-1 brightness-0">
+                            <strong>{{ recipe.difficulty }}</strong>
                         </div>
                     </div>
         
@@ -138,8 +142,14 @@
         <!-- Conteúdo da receita -->
         <div class="mt-2">
             <h2 id="modalTitle" class="text-3xl font-bold mb-4"></h2>
+
+            <div class="flex justify-center flex-wrap gap-2 mb-4">
+                <div id="modalTags" class="flex flex-wrap gap-2">
+                    <!-- tags aqui -->
+                </div>
+            </div>
             
-            <div class="flex  justify-around text-gray-600">
+            <div class="flex justify-around text-gray-600">
                 <div class="flex items-center">
                     <img src="{{ url_for('static', filename='assets/barrinhas.png') }}" class="w-5 h-5 mr-2">
                     <span id="modalDifficulty"></span>

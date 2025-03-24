@@ -1,10 +1,9 @@
 from flask import render_template, request, jsonify
 from app.blueprints.recipe import recipe_bp
-from flask_login import current_user
+from flask_login import current_user, login_required
 import openai
 import json
 import re
-from flask_login import login_required
 from app.models import Recipe
 
 
@@ -18,7 +17,9 @@ def new_recipe():
 def generate_message(context):
     message = f'''Me forneça uma receita em formato JSON, apenas isso, sem nenhum comentário ou frase, com os seguintes campos: 
     'titulo', 'dificuldade', 'tempo_de_preparo', 'tipo_de_refeicao', 'ingredientes' (lista de objetos com 'nome' e 'quantidade'), 
-    e 'passos' (lista de instruções numeradas).
+    , 'passos' (lista de instruções numeradas) e tags (lista que contém de pelo menos seis tags que definam bem o receita, como 
+    culinária, ingrediente principal ou qualquer outra informação desse tipo, tags em com a primeira letra maiúscula).
+    
     Ela deve servir {context["porcoes"]} pessoa(s)'''
     
     if not context['nao_informa_refeicao'] and context['refeicao']:
@@ -95,6 +96,7 @@ def response():
                     ingredients=recipe_data['ingredientes'],
                     instructions=recipe_data['passos'],
                     difficulty=recipe_data['dificuldade'],
+                    tags=recipe_data['tags'],
                     time=recipe_data['tempo_de_preparo'],
                     meal_type=recipe_data['tipo_de_refeicao']
                 )
