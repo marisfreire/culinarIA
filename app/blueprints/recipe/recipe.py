@@ -1,5 +1,5 @@
 from flask import render_template, request, jsonify
-import celery
+from ... import celery
 from app.blueprints.recipe import recipe_bp
 from flask_login import current_user, login_required
 import openai

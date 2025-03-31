@@ -34,7 +34,7 @@ def create_app() -> Flask:
     app.register_blueprint(menu_bp)
     app.register_blueprint(recipe_bp)
 
-    return app
+    return app, celery
 
 def make_celery(app):
     celery = Celery(app.import_name, backend=app.config['RESULT_BACKEND'], broker=app.config['REDIS_URL'])
