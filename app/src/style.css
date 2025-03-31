@@ -25,6 +25,7 @@ button{
     --laranja-escuro: #9E2F00;
     --branco: #EEEEEE;
     --cinza-claro: #C6C6C6;
+    --laranja-opaco: #ec723e5b;
 }
 
 .laranja{
@@ -37,11 +38,12 @@ button{
 
 .btn-amarelo{
     background-color: var(--amarelo);
-    height: 64px;
     color: #fff;
     font-size: 2rem;
     font-weight: 600;
-    width: 384px;
+    width:fit-content;
+    padding: 0.825rem 5rem;
+    text-align: center;
     justify-self: center;
     border: 0;
     border-radius: 5px;

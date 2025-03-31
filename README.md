@@ -38,6 +38,8 @@ A seguir segue a estrutura de diretórios do projeto
 │   │   │   ├── profile-icon.svg
 │   │   │   ├── utensils.svg
 │   │   │   └── vector.png
+│   │   │   └── temperos.jpg
+│   │   │   └── cook.jpg
 │   │   ├── login/ 
 │   │   │   ├── login.css
 │   │   │   ├── login.html
@@ -107,4 +109,4 @@ O projeto atualmente está na versão final, a equipe reconhece erros na geraç�
 
 ### Créditos
 ---
-O ícone do lado do nome do projeto foi adquirido através do site Font Awesome, utilizamos também as fontes Roboto e Playwrite HR Lijeva, ambas do Google Fontes.
+O ícone do lado do nome do projeto foi adquirido através do site Font Awesome, utilizamos também as fontes Roboto e Playwrite HR Lijeva, ambas do Google Fontes. As imagens foram tiradas do site Unsplash e são grátis para uso. 
