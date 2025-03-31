@@ -37,9 +37,9 @@
                 </div>
             </div>
         </main>
-        <div id="password-form" class="bg-gray-200 p-6 w-full max-w-6xl rounded-lg border border-black  absolute hidden">
+        <div id="password-form" class="bg-gray-200 p-6 w-full max-w-6xl rounded-lg absolute hidden">
             <h2 class="text-xl font-semibold mb-4">Alterar Senha</h2>
-            <form method="PUT" action="{{ url_for('auth.change_password') }}" >
+            <form method="POST">
                 <div>
                     <label for="current-password" class="font-medium block mb-1">Senha Atual</label>
                     <input type="password" id="current-password" name="current-password" class="bg-gray-300 p-2 rounded w-full mb-4">
