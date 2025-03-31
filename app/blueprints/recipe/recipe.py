@@ -1,9 +1,11 @@
 from flask import render_template, request, jsonify
+from celery import celery
 from app.blueprints.recipe import recipe_bp
 from flask_login import current_user, login_required
 import openai
 import json
 import re
+import dotenv, os
 from app.models import Recipe
 
 
@@ -47,6 +49,19 @@ def generate_message(context):
     return message
 
 
+@celery.task(bind=True)
+def generate_response(message):
+        dotenv.load_dotenv(dotenv.find_dotenv())
+        client = openai.OpenAI(api_key=os.getenv("API_KEY"))
+
+        response = client.chat.completions.create(
+                        model="gpt-4o-mini",
+                        messages=[{"role": "user", "content": message}],
+                        temperature=0.7,
+                    )
+        return response
+
+
 # resposta para a receita 
 @recipe_bp.route('/resposta', methods=['POST'])
 def response():
@@ -72,15 +87,7 @@ def response():
             
             message = generate_message(data)
             
-            import dotenv, os
-            dotenv.load_dotenv(dotenv.find_dotenv())
-            client = openai.OpenAI(api_key=os.getenv("API_KEY"))
-
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": message}],
-                temperature=0.7,
-            )
+            response = generate_response.apply_async(args=[message])
             
             response_content = response.choices[0].message.content
             cleaned_content = re.sub(r"^```json|```$", "", response_content).strip()
