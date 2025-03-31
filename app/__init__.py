@@ -12,6 +12,13 @@ def create_app() -> Flask:
     app.secret_key = os.getenv("SECRET_KEY")
     app.config["MONGO_URI"] = os.getenv("MONGO_URI")
     
+    print(f"Mongo object: {mongo}") # para debugar
+    if(mongo.cx):
+        
+        print("MongoDB connection established")
+    else:
+        print("Failed do connect to MongoDB")
+
     mongo.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'

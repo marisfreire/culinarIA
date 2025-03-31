@@ -134,14 +134,46 @@
             <button type="submit" id="generateNew" class="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-orange-500 transition">
                 Gerar nova receita
             </button>
-            <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-green-500 transition">
+            <button id="generateShoppingList" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-green-500 transition">
                 Gerar lista de compras
             </button> 
         </div>
 
+        <div class="flex justify-center mt-6 space-x-4">
+            <button id="copyRecipe" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition">
+                Copiar Receita
+            </button>
+        </div>
+
     </div>
+    </section>
+    <section id="shoppingList" class="hidden w-full max-w-6xl mt-8 relative">
+        <button onclick="backToRecipeResult()" class="absolute left-0 ml-4 bg-white-500 text-black px-0 py-2 font-bold">
+            <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" class="w-6 h-6">
+        </button>
+        <p class="text-gray-500 text-center">Aqui está sua lista de compras:</p>
+        <div id="toExport" class="p-2 mt-6">
+            
+            <div class="bg-white p-6 rounded-lg shadow border border-black relative">
+                <img id="logo" src="{{ url_for('static', filename='assets/logo.png') }}" class="absolute top-1 right-1 m-4 w-32 h-auto">
+                <h3 id="shoppingListRecipeTitle" class="text-xl font-semibold  mb-4">Nome da Receita</h3>
+                <ul id="shoppingListItems" class="list-disc pl-5">
+                    <!-- Lista de compras será inserida aqui -->
+                </ul>
+            </div>
+            </div>
+            <div class="flex justify-center mt-6 space-x-4">
+                <button id="exportImage" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-blue-500 transition">
+                    Exportar como Imagem
+                </button>
+                <button id="copyList" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition">
+                Copiar Lista
+            </button>
+        </div>
     </section>
 {% endblock %}
 
-{% block script %} <script  src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}" ></script> 
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="{{ url_for('static', filename='nova-receita/nova-receita.js') }}"></script>
 {% endblock %}
