@@ -1,54 +1,68 @@
 {% extends "layout.html" %}
 
-{% block title %} Perfil de {{ current_user.name.split()[0] }} {% endblock %} 
-{% block style %} <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> {% endblock %}
+{% block title %} Perfil de {{ current_user.name.split()[0] }} {% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
 
 {% block content %}
-<body class="bg-gray-100 flex justify-center items-center h-screen w-screen">
-    <div class="bg-white p-8 rounded-lg  w-full h-full flex flex-col justify-center items-center">
-    <main class="w-full max-w-4xl">
-        <!-- Container com fundo cinza -->
-        <div class="bg-gray-200 p-6 rounded-lg w-full">
-            <h2 class="text-xl font-semibold mb-4">Configurações de conta</h2>
-            <h2 class="text-xl font-semibold mb-4 border-t border-gray-800"></h2>
-            <!-- Grid para Nome e Email lado a lado -->
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="nome" class="font-medium block mb-1">Nome</label>
-                    <input type="text" id="nome" placeholder="{{ current_user.name }}"
-                        class="border p-2 rounded w-full mb-4 bg-gray-300 placeholder-black" disabled>
+<body class="bg-gray-100 p-8 rounded-lg w-full h-full flex flex-col justify-center items-center">
+    <div class="bg-white p-8 rounded-lg w-full h-full flex flex-col justify-center items-center relative">
+        <main class="w-full max-w-6xl">
+            <div class="bg-gray-200 p-6 rounded-lg w-full">
+                <h2 class="text-xl font-semibold mb-4">Configurações de conta</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="nome" class="font-medium block mb-1">Nome</label>
+                        <input type="text" id="nome" placeholder="{{ current_user.name }}" class="border p-2 rounded w-full mb-4 bg-gray-300 placeholder-black" disabled>
+                    </div>
+                    <div>
+                        <label for="email" class="font-medium block mb-1">E-mail</label>
+                        <input type="email" id="email" placeholder="{{ current_user.email }}" disabled class="border p-2 rounded w-full bg-gray-300 placeholder-black">
+                    </div>
                 </div>
-                <div>
-                    <label for="email" class="font-medium block mb-1">E-mail</label>
-                    <input type="email" id="email" placeholder="{{ current_user.email }}" disabled
-                        class="border p-2 rounded w-full bg-gray-300 placeholder-black">
-                </div>
-            </div>
-
-            <!-- Grid para Nível Culinário e Restrições -->
-            <div class="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                    <label for="restricoes" class="font-medium block mb-1">Restrições Alimentares</label>
-                <textarea id="restricoes" placeholder="{{ ', '.join(current_user.preferences['dietary_restrictions']) }}" disabled
-                        class="border p-2 rounded w-full bg-gray-300 placeholder-black"></textarea>
-                </div>
-                <div>
-                    <label for="nivel" class="font-medium block mb-1">Nível Culinário</label>
-                    <input type="text" id="nivel" placeholder="{{ current_user.preferences['skill_level'] }}" disabled
-                        class="border p-2 rounded w-full bg-gray-300 placeholder-black">
-                    <div class="flex flex-col space-y-2 mt-4">
-                        <button
-                            class="bg-green-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-green-600 transition">Alterar
-                            minhas informações</button>
-                        <button
-                            class="bg-yellow-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-yellow-600 transition">Alterar
-                            minha senha</button>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <label for="restricoes" class="font-medium block mb-1">Restrições Alimentares</label>
+                        <textarea id="restricoes" placeholder="{{ ', '.join(current_user.preferences['dietary_restrictions']) }}" disabled class="border p-2 rounded w-full bg-gray-300 placeholder-black"></textarea>
+                    </div>
+                    <div>
+                        <label for="nivel" class="font-medium block mb-1">Nível Culinário</label>
+                        <input type="text" id="nivel" placeholder="{{ current_user.preferences['skill_level'] }}" disabled class="border p-2 rounded w-full bg-gray-300 placeholder-black">
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="bg-green-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-green-600 transition">Alterar minhas informações</button>
+                            <button id="toggle-password-form" class="bg-yellow-500 text-white px-4 py-3 rounded-2xl shadow hover:bg-yellow-600 transition">Alterar minha senha</button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </main>
+        <div id="password-form" class="bg-gray-200 p-6 w-full max-w-6xl rounded-lg absolute hidden">
+            <h2 class="text-xl font-semibold mb-4">Alterar Senha</h2>
+            <form method="POST">
+                <div>
+                    <label for="current-password" class="font-medium block mb-1">Senha Atual</label>
+                    <input type="password" id="current-password" name="current-password" class="bg-gray-300 p-2 rounded w-full mb-4">
+                </div>
+                <div>
+                    <label for="new-password" class="font-medium block mb-1">Nova Senha</label>
+                    <input type="password" id="new-password" name="new-password" class="bg-gray-300 p-2 rounded w-full mb-4">
+                </div>
+                <div>
+                    <label for="confirm-password" class="font-medium block mb-1">Confirmar Nova Senha</label>
+                    <input type="password" id="confirm-password" name="confirm-password" class="bg-gray-300 p-2 rounded w-full mb-4">
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" id="close-password-form" class="bg-yellow-500 text-white px-4 py-2 rounded">Cancelar</button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Salvar</button>
+                </div>
+            </form>
         </div>
-        </div>
-    </main>
+        
+    </div>
 </body>
 
+{% endblock %}
+
+{% block script %} <script  src="{{ url_for('static', filename='profile/profile.js') }}" ></script> 
 {% endblock %}

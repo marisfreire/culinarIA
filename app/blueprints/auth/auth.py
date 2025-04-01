@@ -1,7 +1,8 @@
 from flask import render_template, redirect, url_for, request, flash, jsonify
 from app.blueprints.auth import auth_bp
-from flask_login import login_user, logout_user, login_required, current_user, LoginManager
+from flask_login import login_user, logout_user, login_required, current_user
 from app.models.users import User
+from werkzeug.security import generate_password_hash
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -16,7 +17,7 @@ def login():
         
         user_data = User.find_by_email(email)
         
-        if not user_data or not User.check_password(user_data, password):
+        if not User.check_password(user_data, password):
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return jsonify({'error': 'Por favor, verifique seus dados e tente novamente.'})
             flash('Por favor, verifique seus dados e tente novamente.', 'error')
@@ -53,7 +54,7 @@ def signup():
             return redirect(url_for('auth.signup'))
 
         informe_preferences = not request.form.get('informe_preferences')
-        skill_level = "iniciante"
+        skill_level = 'iniciante'
         dietary_restrictions = []
         
         if informe_preferences:
@@ -85,7 +86,31 @@ def logout():
     return redirect(url_for('menu.menu'))
 
 
-@auth_bp.route('/profile')
+@auth_bp.route('/perfil')
 @login_required
 def profile():
     return render_template('profile/profile.html')
+
+
+@auth_bp.route('/perfil/mudar-senha', methods=['POST'])
+@login_required
+def change_password():
+    data = request.get_json()
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    confirm_password = data.get('confirm_password')
+
+    if new_password != confirm_password:
+        return jsonify({'error': 'As novas senhas não coincidem.'}), 400
+
+    data_user = User.find_by_email(current_user.email)
+    if not User.check_password(data_user, current_password):
+        return jsonify({'error': 'Senha atual incorreta.'}), 400
+
+    new_password_hash = generate_password_hash(new_password)
+    User.collection.update_one(
+        {'user_id': current_user.id},
+        {'$set': {'password_hash': new_password_hash}}
+    )
+
+    return jsonify({'message': 'Senha alterada com sucesso!'}), 200

@@ -73,7 +73,7 @@ class User(UserMixin):
         return User.collection.find_one({"email": email})
 
     @staticmethod
-    def check_password(user:str, password:str):
+    def check_password(user:dict, password:str):
         return check_password_hash(user["password_hash"], password)
 
     @staticmethod
