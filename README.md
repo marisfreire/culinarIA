@@ -65,13 +65,13 @@ O aplicativo estará disponível em `http://localhost:5000`.
 ---
 Imagens de algumas telas da aplicação
 
-![./screenshots/login.png]()
-![./screenshots/menu-logged.png]()
-![./screenshots/menu.png]()
-![./screenshots/new-recipe.png]()
-![./screenshots/recipe-favorite.png]()
-![./screenshots/recipe.png]()
-![./screenshots/singup.png]()
+![](./screenshots/login.png)
+![](./screenshots/singup.png)
+![](./screenshots/menu.png)
+![](./screenshots/new-recipe.png)
+![](./screenshots/recipe.png)
+![](./screenshots/menu-logged.png)
+![](./screenshots/recipe-favorite.png)
 
 ### Versionamento e Problemas Conhecidos
 ---
