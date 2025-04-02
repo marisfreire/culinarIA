@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 
 {% block title %}Nova receita{% endblock %}
@@ -81,7 +82,7 @@
             <img src="{{ url_for('static', filename='assets/arrow-back.svg') }}" class="w-6 h-6">
         </button>
         <p class="text-gray-500 text-center">Prontinho! Aproveite sua nova deliciosa receita :)</p>
-        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-black">
+        <div class="bg-white p-6 rounded-lg shadow mt-6 border border-black" style="position: relative;">
             <div class="flex justify-between items-start">
                 <h2 id="recipeTitle" class="text-2xl font-bold">Título da Receita</h2>
                 {% if current_user.is_authenticated %}
@@ -112,22 +113,24 @@
                     <span id="MealType">Tipo de refeição</span>
                 </div>
             </div>
-
+        
             <div class="mt-6">
                 <h3 class="text-xl font-semibold mb-3">Ingredientes</h3>
-                
                 <ul id="ingredientsList" class="list-disc pl-5 grid grid-cols-2">
                     <!-- Lista de ingredientes será inserida aqui -->
                 </ul>
-            
             </div>
-
+        
             <div class="mt-6">
                 <h3 class="text-xl font-semibold mb-3">Modo de Preparo</h3>
                 <ol id="recipeSteps" class="pl-5">
                     <!-- Passos serão inseridos aqui -->
                 </ol>
             </div>
+        
+            <button id="copyRecipe" class="text-gray-400 text-2xl" data-recipe-id="" style="position: absolute; bottom: 1.5rem; right: 1.5rem;">
+                <img src="{{ url_for('static', filename='assets/copy.svg') }}" class="w-5 h-5" alt="Copiar">
+            </button>
         </div>
 
         <div class="flex justify-center mt-6 space-x-4">
@@ -137,12 +140,6 @@
             <button id="generateShoppingList" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-green-500 transition">
                 Gerar lista de compras
             </button> 
-        </div>
-
-        <div class="flex justify-center mt-6 space-x-4">
-            <button id="copyRecipe" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-gray-500 transition">
-                Copiar Receita
-            </button>
         </div>
 
     </div>
