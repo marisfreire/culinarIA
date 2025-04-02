@@ -1,9 +1,38 @@
 @import "../style.css";
 
+
+@media only screen and (max-width: 800px){
+    body{
+        flex-direction:  column;
+    }
+
+    .ilustracao{
+        position: absolute;
+        opacity: 0;
+        overflow: hidden;
+    }
+
+    .laranja{
+        width: 100%;
+        border: 2px solid red;
+        min-height: 100vh;
+    }
+
+    form{
+        scale: 0.95;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    form{
+        scale: 0.85;
+    }
+}
+
 body{
     display: flex;
     color: #fff;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 div{
@@ -79,4 +108,12 @@ form p{
 
 form button{
     margin-top: 18px;
+}
+
+.ilustracao{
+    background-image: url(../assets/temperos.jpg);
+    background-size: cover;
+    background-color: var(--laranja-opaco);
+    background-blend-mode:luminosity;
+    background-position: center;
 }
